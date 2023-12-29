@@ -1,5 +1,7 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+해당 레포 목적: Next.js의 프로그래밍 과정을 익히고 우리만의 Notion 작성을 위한 프로젝트를 위해 구현하는 레포 입니다.
+
 ## Getting Started
 
 First, run the development server:
