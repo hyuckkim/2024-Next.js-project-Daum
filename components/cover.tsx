@@ -24,6 +24,7 @@ export const Cover = ({ url, preview }: CoverImageProps) => {
   const coverImage = useCoverImage();
   const removeCoverImage = useMutation(api.documents.removeCoverImage);
 
+  //edgestore에서 delete 메소드 가져오기
   const onRemove = async () => {
     if (url) {
       await edgestore.publicFiles.delete({
