@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 const DocumentsPage = () => {
+  //아이디 없는 메인화면 의미
   const router = useRouter();
   const { user } = useUser();
   const create = useMutation(api.documents.create);
