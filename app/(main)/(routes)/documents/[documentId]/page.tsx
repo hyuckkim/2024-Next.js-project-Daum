@@ -18,10 +18,12 @@ interface DocumentIdPageProps {
 
 const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
   const Editor = useMemo(
+    //서버사이드렌더링은 비활성화
     () => dynamic(() => import("@/components/editor"), { ssr: false }),
     []
   );
 
+  //인자로 document.id 넘김 -> Query로 작성한 getById 호출
   const document = useQuery(api.documents.getById, {
     documentId: params.documentId,
   });
