@@ -24,7 +24,22 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({ onChange, value }) => {
     setNowDate(moment(selectedDate).format("YYYY년 MM월 DD일"));
   };
 
-  return <div>hi</div>;
+  return (
+    <div className="relative">
+      <div
+        className="w-200 h-48 border-solid border-0.8 border-gray-600 rounded-10 px-12 text-gray-800 font-SUITVariable text-16 font-medium leading-140 text-left appearance-none bg-white bg-right-12px-center bg-no-repeat bg-size-12"
+        onClick={handleToggleCalendar}
+      >
+        <div
+          className="z-11 absolute top-full left-0 ${isOpen ? 'block' : 'hidden"
+          onChange={handleDateChange}
+          value={value}
+        >
+          <Calendar />
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default CustomCalendar;
