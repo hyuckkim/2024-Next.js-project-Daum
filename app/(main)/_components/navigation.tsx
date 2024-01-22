@@ -8,6 +8,7 @@ import {
   Search,
   Settings,
   Trash,
+  Calendar,
 } from "lucide-react";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { ElementRef, useEffect, useRef, useState } from "react";
@@ -39,6 +40,8 @@ export const Navigation = () => {
   const pathname = usePathname();
   const isMobile = useMediaQuery("(max-width: 768px)");
   const create = useMutation(api.documents.create);
+
+  const calendarCreate = useMutation(api.calendars.create);
 
   const isResizingRef = useRef(false);
   const sidebarRef = useRef<ElementRef<"aside">>(null);
@@ -133,6 +136,18 @@ export const Navigation = () => {
     });
   };
 
+  const handleCreate2 = () => {
+    const promise = calendarCreate({ title: "Untitled" }).then((calendarId) =>
+      router.push(`/calendars/${calendarId}`)
+    );
+
+    toast.promise(promise, {
+      loading: "Creating a new calendar...",
+      success: "New note created!",
+      error: "Failed to create a new calendar.",
+    });
+  };
+
   return (
     <>
       <aside
@@ -173,6 +188,11 @@ export const Navigation = () => {
               <TrashBox />
             </PopoverContent>
           </Popover>
+          <Item
+            onClick={handleCreate2}
+            icon={Calendar}
+            label="Add a calendar"
+          />
         </div>
         <div
           onMouseDown={handleMouseDown}

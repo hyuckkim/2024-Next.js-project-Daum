@@ -14,4 +14,12 @@ export default defineSchema({
   })
     .index("by_user", ["userId"])
     .index("by_user_parent", ["userId", "parentDocument"]),
+
+  calendars: defineTable({
+    title: v.string(),
+    userId: v.string(),
+    isArchived: v.boolean(),
+    isPublished: v.boolean(),
+    content: v.optional(v.string()),
+  }).index("by_user", ["userId"]),
 });
