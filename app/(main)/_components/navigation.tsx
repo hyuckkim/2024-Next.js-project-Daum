@@ -31,6 +31,7 @@ import { Item } from "./item";
 import { DocumentList } from "./document-list";
 import { TrashBox } from "./trash-box";
 import { Navbar } from "./navbar";
+import { CalendarList } from "./calendar-list";
 
 export const Navigation = () => {
   const router = useRouter();
@@ -193,6 +194,7 @@ export const Navigation = () => {
             icon={Calendar}
             label="Add a calendar"
           />
+          <CalendarList />
         </div>
         <div
           onMouseDown={handleMouseDown}

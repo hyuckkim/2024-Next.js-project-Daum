@@ -6,6 +6,7 @@ import { Doc, Id } from "./_generated/dataModel";
 export const create = mutation({
   args: {
     title: v.string(),
+    newCalendar: v.optional(v.id("calendars")),
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
@@ -19,6 +20,7 @@ export const create = mutation({
     const calendar = await ctx.db.insert("calendars", {
       title: args.title,
       userId,
+      newCalendar: args.newCalendar,
       isArchived: false,
       isPublished: false,
     });
@@ -53,5 +55,29 @@ export const getById = query({
     }
 
     return calendar;
+  },
+});
+
+export const getSidebar = query({
+  args: {
+    newCalendar: v.optional(v.id("calendars")),
+  },
+  handler: async (ctx) => {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (!identity) {
+      throw new Error("Not authenticated");
+    }
+
+    const userId = identity.subject;
+
+    const calendars = await ctx.db
+      .query("calendars")
+      .withIndex("by_user", (q) => q.eq("userId", userId))
+      .filter((q) => q.eq(q.field("isArchived"), false))
+      .order("desc")
+      .collect();
+
+    return calendars;
   },
 });
