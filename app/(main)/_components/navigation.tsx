@@ -138,7 +138,7 @@ export const Navigation = () => {
   };
 
   const handleCreate2 = () => {
-    const promise = calendarCreate({ title: "Untitled" }).then((calendarId) =>
+    const promise = calendarCreate({ title: "Calendar" }).then((calendarId) =>
       router.push(`/calendars/${calendarId}`)
     );
 

@@ -1,6 +1,5 @@
 import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
-
 export default defineSchema({
   documents: defineTable({
     title: v.string(),
@@ -14,7 +13,6 @@ export default defineSchema({
   })
     .index("by_user", ["userId"])
     .index("by_user_parent", ["userId", "parentDocument"]),
-
   calendars: defineTable({
     title: v.string(),
     userId: v.string(),

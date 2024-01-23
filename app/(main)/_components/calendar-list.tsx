@@ -60,6 +60,7 @@ export const CalendarList = ({
       <p
         style={{
           paddingLeft: level ? `${level * 12 + 25}px` : undefined,
+          marginTop: 20,
         }}
         className={cn(
           "hidden text-sm font-medium text-muted-foreground/80",

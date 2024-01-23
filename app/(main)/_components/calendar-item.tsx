@@ -54,7 +54,7 @@ export const CalendarItem = ({
   const onCreate = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     event.stopPropagation();
     if (!id) return;
-    const promise = create({ title: "Untitled", newCalendar: id }).then(
+    const promise = create({ title: "Calendar", newCalendar: id }).then(
       (calendarId) => {
         router.push(`/calendars/${calendarId}`);
       }
@@ -71,11 +71,8 @@ export const CalendarItem = ({
     <div
       onClick={onClick}
       role="button"
-      style={{
-        paddingLeft: "12px",
-      }}
       className={cn(
-        "group min-h-[27px] text-sm py-1 pr-3 w-full hover:bg-primary/5 flex items-center text-muted-foreground font-medium",
+        "group min-h-[27px] text-sm py-1 pr-3 pl-5 w-full hover:bg-primary/5 flex items-center text-muted-foreground font-medium",
         active && "bg-primary/5 text-primary"
       )}
     >
