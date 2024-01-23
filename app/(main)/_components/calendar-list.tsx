@@ -8,7 +8,7 @@ import { useState } from "react";
 import { Item } from "./item";
 import { CalendarItem } from "./calendar-item";
 import { cn } from "@/lib/utils";
-import { FileIcon } from "lucide-react";
+import { CalendarIcon } from "lucide-react";
 
 interface CalendarListProps {
   calendarId?: Id<"calendars">;
@@ -57,17 +57,6 @@ export const CalendarList = ({
 
   return (
     <>
-      <p
-        style={{
-          paddingLeft: level ? `${level * 12 + 25}px` : undefined,
-          marginTop: 20,
-        }}
-        className={cn(
-          "hidden text-sm font-medium text-muted-foreground/80",
-          expanded && "last:block",
-          level === 0 && "hidden"
-        )}
-      ></p>
       {calendars.map((calendar) => (
         <div key={calendar._id}>
           <CalendarItem
@@ -75,7 +64,7 @@ export const CalendarList = ({
             onClick={() => onRedirect(calendar._id)}
             label={calendar.title}
             calendarIcon={calendar.icon}
-            icon={FileIcon}
+            icon={CalendarIcon}
             active={params.calendarId === calendar._id}
           />
           {expanded[calendar._id] && (

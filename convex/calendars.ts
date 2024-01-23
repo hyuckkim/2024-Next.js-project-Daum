@@ -1,6 +1,7 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 import { Doc, Id } from "./_generated/dataModel";
+
 export const create = mutation({
   args: {
     title: v.string(),
@@ -23,10 +24,10 @@ export const create = mutation({
   },
 });
 export const getById = query({
-  args: { calendarId: v.id("calendars") },
+  args: { newCalendar: v.id("calendars") },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
-    const calendar = await ctx.db.get(args.calendarId);
+    const calendar = await ctx.db.get(args.newCalendar);
     if (!calendar) {
       throw new Error("Not found");
     }
@@ -65,5 +66,42 @@ export const getSidebar = query({
       .collect();
 
     return calendars;
+  },
+});
+
+export const update = mutation({
+  args: {
+    id: v.id("calendars"),
+    title: v.optional(v.string()),
+    content: v.optional(v.string()),
+    icon: v.optional(v.string()),
+    isPublished: v.optional(v.boolean()),
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (!identity) {
+      throw new Error("Unauthenticated");
+    }
+
+    const userId = identity.subject;
+
+    const { id, ...rest } = args;
+
+    const existingCalendar = await ctx.db.get(args.id);
+
+    if (!existingCalendar) {
+      throw new Error("Not found");
+    }
+
+    if (existingCalendar.userId !== userId) {
+      throw new Error("Unauthorized");
+    }
+
+    const calendar = await ctx.db.patch(args.id, {
+      ...rest,
+    });
+
+    return calendar;
   },
 });
