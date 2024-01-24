@@ -31,7 +31,6 @@ import { Item } from "./item";
 import { DocumentList } from "./document-list";
 import { TrashBox } from "./trash-box";
 import { Navbar } from "./navbar";
-import { CalendarList } from "./calendar-list";
 
 export const Navigation = () => {
   const router = useRouter();
@@ -137,16 +136,8 @@ export const Navigation = () => {
     });
   };
 
-  const handleCreate2 = () => {
-    const promise = calendarCreate({ title: "Calendar" }).then((calendarId) =>
-      router.push(`/calendars/${calendarId}`)
-    );
-
-    toast.promise(promise, {
-      loading: "Creating a new calendar...",
-      success: "New note created!",
-      error: "Failed to create a new calendar.",
-    });
+  const moveToCalendar = () => {
+    router.push(`/calendars`);
   };
 
   return (
@@ -190,11 +181,10 @@ export const Navigation = () => {
             </PopoverContent>
           </Popover>
           <Item
-            onClick={handleCreate2}
+            onClick={moveToCalendar}
             icon={Calendar}
-            label="Add a calendar"
+            label="make a calendar"
           />
-          <CalendarList />
         </div>
         <div
           onMouseDown={handleMouseDown}
