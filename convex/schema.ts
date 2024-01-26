@@ -23,4 +23,13 @@ export default defineSchema({
     isPublished: v.boolean(),
     content: v.optional(v.string()),
   }).index("by_user", ["userId"]),
+
+  boards: defineTable({
+    title: v.string(),
+    userId: v.string(),
+    isArchived: v.boolean(),
+    content: v.optional(v.string()),
+    icon: v.optional(v.string()),
+    isPublished: v.boolean(),
+  }).index("by_user", ["userId"]),
 });

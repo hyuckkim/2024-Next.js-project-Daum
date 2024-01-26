@@ -29,8 +29,10 @@ import { useSettings } from "@/hooks/use-settings";
 import { UserItem } from "./user-item";
 import { Item } from "./item";
 import { DocumentList } from "./document-list";
+import { BoardList } from "./board-list";
 import { TrashBox } from "./trash-box";
 import { Navbar } from "./navbar";
+import { BoardTrashBox } from "./board-trash-box";
 
 export const Navigation = () => {
   const router = useRouter();
@@ -40,6 +42,7 @@ export const Navigation = () => {
   const pathname = usePathname();
   const isMobile = useMediaQuery("(max-width: 768px)");
   const create = useMutation(api.documents.create);
+  const createKanban = useMutation(api.boards.create);
 
   const calendarCreate = useMutation(api.calendars.create);
 
@@ -140,6 +143,18 @@ export const Navigation = () => {
     router.push(`/calendars`);
   };
 
+  const handleCreateKanban = () => {
+    const promise = createKanban({ title: "Untitled" }).then((boardId) =>
+      router.push(`/boards/${boardId}`)
+    );
+
+    toast.promise(promise, {
+      loading: "Creating a new board...",
+      success: "New board created!",
+      error: "Failed to create a new board.",
+    });
+  };
+
   return (
     <>
       <aside
@@ -166,26 +181,33 @@ export const Navigation = () => {
           <Item label="Settings" icon={Settings} onClick={settings.onOpen} />
           <Item onClick={handleCreate} label="New page" icon={PlusCircle} />
         </div>
-        <div className="mt-4">
-          <DocumentList />
-          <Item onClick={handleCreate} icon={Plus} label="Add a page" />
-          <Popover>
-            <PopoverTrigger className="w-full mt-4">
-              <Item label="Trash" icon={Trash} />
-            </PopoverTrigger>
-            <PopoverContent
-              className="p-0 w-72"
-              side={isMobile ? "bottom" : "right"}
-            >
-              <TrashBox />
-            </PopoverContent>
-          </Popover>
-          <Item
-            onClick={moveToCalendar}
-            icon={Calendar}
-            label="make a calendar"
-          />
-        </div>
+        <div className="mt-4" />
+        <DocumentList />
+        <Item onClick={handleCreate} icon={Plus} label="Add a page" />
+        <div className="mt-4" />
+        <BoardList />
+        <Item
+          onClick={handleCreateKanban}
+          icon={Plus}
+          label="Add a kanban board"
+        />
+        <Popover>
+          <PopoverTrigger className="w-full mt-4">
+            <Item label="Trash" icon={Trash} />
+          </PopoverTrigger>
+          <PopoverContent
+            className="p-0 w-72"
+            side={isMobile ? "bottom" : "right"}
+          >
+            <TrashBox />
+            <BoardTrashBox />
+          </PopoverContent>
+        </Popover>
+        <Item
+          onClick={moveToCalendar}
+          icon={Calendar}
+          label="make a calendar"
+        />
         <div
           onMouseDown={handleMouseDown}
           onClick={resetWidth}
