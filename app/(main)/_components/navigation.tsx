@@ -8,6 +8,7 @@ import {
   Search,
   Settings,
   Trash,
+  Calendar,
 } from "lucide-react";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { ElementRef, useEffect, useRef, useState } from "react";
@@ -42,6 +43,8 @@ export const Navigation = () => {
   const isMobile = useMediaQuery("(max-width: 768px)");
   const create = useMutation(api.documents.create);
   const createKanban = useMutation(api.boards.create);
+
+  const calendarCreate = useMutation(api.calendars.create);
 
   const isResizingRef = useRef(false);
   const sidebarRef = useRef<ElementRef<"aside">>(null);
@@ -136,6 +139,10 @@ export const Navigation = () => {
     });
   };
 
+  const moveToCalendar = () => {
+    router.push(`/calendars`);
+  };
+
   const handleCreateKanban = () => {
     const promise = createKanban({ title: "Untitled" }).then((boardId) =>
       router.push(`/boards/${boardId}`)
@@ -179,7 +186,11 @@ export const Navigation = () => {
         <Item onClick={handleCreate} icon={Plus} label="Add a page" />
         <div className="mt-4" />
         <BoardList />
-        <Item onClick={handleCreateKanban} icon={Plus} label="Add a kanban board" />
+        <Item
+          onClick={handleCreateKanban}
+          icon={Plus}
+          label="Add a kanban board"
+        />
         <Popover>
           <PopoverTrigger className="w-full mt-4">
             <Item label="Trash" icon={Trash} />
@@ -192,6 +203,11 @@ export const Navigation = () => {
             <BoardTrashBox />
           </PopoverContent>
         </Popover>
+        <Item
+          onClick={moveToCalendar}
+          icon={Calendar}
+          label="make a calendar"
+        />
         <div
           onMouseDown={handleMouseDown}
           onClick={resetWidth}
