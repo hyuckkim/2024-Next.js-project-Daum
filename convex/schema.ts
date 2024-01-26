@@ -14,4 +14,14 @@ export default defineSchema({
   })
     .index("by_user", ["userId"])
     .index("by_user_parent", ["userId", "parentDocument"]),
+
+  boards: defineTable({
+    title: v.string(),
+    userId: v.string(),
+    isArchived: v.boolean(),
+    content: v.optional(v.string()),
+    icon: v.optional(v.string()),
+    isPublished: v.boolean(),
+  })
+    .index("by_user", ["userId"])
 });

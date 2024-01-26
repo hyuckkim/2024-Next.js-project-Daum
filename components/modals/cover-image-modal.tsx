@@ -29,7 +29,7 @@ export const CoverImageModal = () => {
   const onChange = async (file?: File) => {
     if (file) {
       setIsSubmitting(true);
-      setFile(file); 
+      setFile(file);
 
       const res = await edgestore.publicFiles.upload({
         file,
