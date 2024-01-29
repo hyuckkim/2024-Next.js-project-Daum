@@ -97,6 +97,9 @@ const MakeCalendar = () => {
           const validation = getMonth(currentDate) === getMonth(v);
           const today =
             format(new Date(), "yyyyMMdd") === format(v, "yyyyMMdd");
+
+          const hasPost = checkedDates.includes(i);
+
           if (validation && isSaturday(v)) {
             style = {
               color: "blue",
@@ -115,8 +118,8 @@ const MakeCalendar = () => {
             >
               <div className={styles.topLine}>
                 <span className={styles.day}>{format(v, "d")}</span>
-                {checkedDates && <span>V</span>}
                 {today && <span className={styles.today}>(오늘)</span>}
+                <span className={styles.plusButton}>+</span>
               </div>
             </div>
           );

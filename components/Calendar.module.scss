@@ -69,8 +69,10 @@
         gap: 5px;
         padding: 0 3px;
         align-items: center;
+        justify-content: space-between;
         .today {
           font-size: 0.9rem;
+          color: green;
         }
       }
     }

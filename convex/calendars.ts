@@ -5,7 +5,6 @@ import { Doc, Id } from "./_generated/dataModel";
 export const create = mutation({
   args: {
     title: v.string(),
-    newCalendar: v.optional(v.id("calendars")),
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
@@ -16,13 +15,13 @@ export const create = mutation({
     const calendar = await ctx.db.insert("calendars", {
       title: args.title,
       userId,
-      newCalendar: args.newCalendar,
       isArchived: false,
       isPublished: false,
     });
     return calendar;
   },
 });
+
 export const getById = query({
   args: { newCalendar: v.id("calendars") },
   handler: async (ctx, args) => {
