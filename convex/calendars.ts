@@ -2,6 +2,35 @@ import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 import { Doc, Id } from "./_generated/dataModel";
 
+export const archive = mutation({
+  args: { id: v.id("calendars") },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (!identity) {
+      throw new Error("Not authenticated");
+    }
+
+    const userId = identity.subject;
+
+    const existingCalendar = await ctx.db.get(args.id);
+
+    if (!existingCalendar) {
+      throw new Error("Not found");
+    }
+
+    if (existingCalendar.userId !== userId) {
+      throw new Error("Unauthorized");
+    }
+
+    const calendar = await ctx.db.patch(args.id, {
+      isArchived: true,
+    });
+
+    return calendar;
+  },
+});
+
 export const create = mutation({
   args: {
     title: v.string(),
@@ -45,9 +74,6 @@ export const getById = query({
 });
 
 export const getSidebar = query({
-  args: {
-    newCalendar: v.optional(v.id("calendars")),
-  },
   handler: async (ctx) => {
     const identity = await ctx.auth.getUserIdentity();
 

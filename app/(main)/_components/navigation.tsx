@@ -33,6 +33,7 @@ import { BoardList } from "./board-list";
 import { TrashBox } from "./trash-box";
 import { Navbar } from "./navbar";
 import { BoardTrashBox } from "./board-trash-box";
+import { CalendarList } from "./calendar-list";
 
 export const Navigation = () => {
   const router = useRouter();
@@ -43,8 +44,7 @@ export const Navigation = () => {
   const isMobile = useMediaQuery("(max-width: 768px)");
   const create = useMutation(api.documents.create);
   const createKanban = useMutation(api.boards.create);
-
-  const calendarCreate = useMutation(api.calendars.create);
+  const createCalendar = useMutation(api.calendars.create);
 
   const isResizingRef = useRef(false);
   const sidebarRef = useRef<ElementRef<"aside">>(null);
@@ -139,8 +139,16 @@ export const Navigation = () => {
     });
   };
 
-  const moveToCalendar = () => {
-    router.push(`/calendars`);
+  const handleCreateCalendar = () => {
+    const promise = createCalendar({ title: "Untitled" }).then((calendarId) =>
+      router.push(`/calendars`)
+    );
+
+    toast.promise(promise, {
+      loading: "Creating a new calendar...",
+      success: "New calendar created!",
+      error: "Failed to create a new calendar.",
+    });
   };
 
   const handleCreateKanban = () => {
@@ -204,10 +212,11 @@ export const Navigation = () => {
           </PopoverContent>
         </Popover>
         <Item
-          onClick={moveToCalendar}
+          onClick={handleCreateCalendar}
           icon={Calendar}
-          label="make a calendar"
+          label="Make a calendar"
         />
+        <CalendarList />
         <div
           onMouseDown={handleMouseDown}
           onClick={resetWidth}
