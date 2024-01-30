@@ -23,14 +23,14 @@ import { PlusCircle } from "lucide-react";
 const MakeCalendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [checkedDates, setCheckedDates] = useState<number[]>([]);
-  const [showButton, setShowButton] = useState(false);
+  const [showButton, setShowButton] = useState<number>();
 
-  const handleMouseEnter = () => {
-    setShowButton(true);
+  const handleMouseEnter = (index: number) => {
+    setShowButton(index);
   };
 
-  const handleMouseLeave = () => {
-    setShowButton(false);
+  const handleMouseLeave = (index: number) => {
+    setShowButton(undefined);
   };
 
   const monthStart = startOfMonth(currentDate);
@@ -125,13 +125,15 @@ const MakeCalendar = () => {
               key={`date${i}`}
               className={validation ? styles.currentMonth : styles.diffMonth}
               style={style}
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
+              onMouseEnter={() => handleMouseEnter(i)}
+              onMouseLeave={() => handleMouseLeave(i)}
             >
               <div className={styles.topLine}>
                 <span className={styles.day}>{format(v, "d")}</span>
                 {today && <span className={styles.today}>(오늘)</span>}
-                {showButton && <PlusCircle className="w-4 h-4" />}
+                {showButton === i && (
+                  <PlusCircle className="w-4 h-4 cursor-pointer" />
+                )}
               </div>
             </div>
           );
