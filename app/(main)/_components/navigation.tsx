@@ -29,10 +29,10 @@ import { useSettings } from "@/hooks/use-settings";
 import { UserItem } from "./user-item";
 import { Item } from "./item";
 import { DocumentList } from "./document-list";
-import { BoardList } from "./board-list";
+import { BoardList } from "./KanbanBoard/board-list";
 import { TrashBox } from "./trash-box";
 import { Navbar } from "./navbar";
-import { BoardTrashBox } from "./board-trash-box";
+import { BoardTrashBox } from "./KanbanBoard/board-trash-box";
 
 export const Navigation = () => {
   const router = useRouter();

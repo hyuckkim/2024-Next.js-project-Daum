@@ -3,7 +3,6 @@
 import { api } from "@/convex/_generated/api";
 import { useQuery } from "convex/react";
 import { useParams, useRouter } from "next/navigation";
-import { Item } from "./item";
 import { FileIcon } from "lucide-react";
 import { BoardItem } from "./board-item";
 

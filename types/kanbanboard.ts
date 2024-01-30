@@ -14,6 +14,7 @@ export type KanbanBoardDocument = {
   _id: Id<"documents">,
 
   color?: { light: string, dark: string },
+  priority?: 1 | 2 | 3,
 };
 
 

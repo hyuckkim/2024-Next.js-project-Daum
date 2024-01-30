@@ -42,14 +42,11 @@ export const insertCheckBoxBlock: ReactSlashMenuItem<
 > = {
   name: "checkbox",
   execute: (editor) => {
-    editor.insertBlocks(
-      [
-        {
-          type: "checkbox"
-        }
-      ],
-      editor.getTextCursorPosition().block,
-      "before"
+    editor.updateBlock(
+      editor.getTextCursorPosition().block, {
+        type: "checkbox",
+        props: { checked: false }
+      }
     );
   },
   aliases: [

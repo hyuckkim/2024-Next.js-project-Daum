@@ -14,7 +14,7 @@ const BoardView = ({
   initialContent,
   editable,
 }: {
-  onChange: (value: string) => void,
+  onChange?: (value: string) => void,
   initialContent?: string,
   editable?: boolean
 }) => {
@@ -24,7 +24,7 @@ const BoardView = ({
   const editor = useKanbanBoard({
     initialContent: initialContent ? JSON.parse(initialContent) : undefined,
     onBoardChanged: (board) => {
-      onChange(JSON.stringify(board, null, 2));
+      onChange?.(JSON.stringify(board, null, 2));
     }
   });
 
@@ -108,16 +108,17 @@ const BoardView = ({
         )}
         onDragOver={(e) => onElementIndexDragOver(e, editor?.content?.length ?? 0)}
       />
-      <div
-        className="flex flex-col h-min w-64 p-2 rounded-md border-2 border-dashed text-muted-foreground border-neutral-200 dark:border-neutral-700 justify-center items-center shrink-[3]"
-        role="button"
-        onClick={editor.onNewElement}
-
-      >
-        <div className="h-80 flex justify-center items-center">
-          <PlusCircle className="w-8 h-8"/>
+      {editable && (
+        <div
+          className="flex flex-col h-min w-64 p-2 rounded-md border-2 border-dashed text-muted-foreground border-neutral-200 dark:border-neutral-700 justify-center items-center shrink-[3]"
+          role="button"
+          onClick={editor.onNewElement}
+        >
+          <div className="h-80 flex justify-center items-center">
+            <PlusCircle className="w-8 h-8"/>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   )
 }
