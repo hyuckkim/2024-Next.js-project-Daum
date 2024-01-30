@@ -29,7 +29,7 @@ const MakeCalendar = () => {
     setShowButton(index);
   };
 
-  const handleMouseLeave = (index: number) => {
+  const handleMouseLeave = () => {
     setShowButton(undefined);
   };
 
@@ -126,7 +126,7 @@ const MakeCalendar = () => {
               className={validation ? styles.currentMonth : styles.diffMonth}
               style={style}
               onMouseEnter={() => handleMouseEnter(i)}
-              onMouseLeave={() => handleMouseLeave(i)}
+              onMouseLeave={handleMouseLeave}
             >
               <div className={styles.topLine}>
                 <span className={styles.day}>{format(v, "d")}</span>
