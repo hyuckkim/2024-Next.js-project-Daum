@@ -141,7 +141,7 @@ export const Navigation = () => {
 
   const handleCreateCalendar = () => {
     const promise = createCalendar({ title: "Untitled" }).then((calendarId) =>
-      router.push(`/calendars`)
+      router.push(`/calendars/${calendarId}`)
     );
 
     toast.promise(promise, {

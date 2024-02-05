@@ -19,11 +19,31 @@ import {
 } from "date-fns";
 import { date } from "zod";
 import { PlusCircle } from "lucide-react";
+import router from "next/router";
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { toast } from "sonner";
 
 const MakeCalendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [checkedDates, setCheckedDates] = useState<number[]>([]);
   const [showButton, setShowButton] = useState<number>();
+  const [clickedButton, setClickedButton] = useState<boolean>(false);
+  const create = useMutation(api.documents.create);
+
+  const handleCalendarDocument = () => {
+    setClickedButton(true);
+    if (clickedButton) {
+      const promise = create({ title: "Untitled" }).then((documentId) =>
+        router.push(`/documents/${documentId}`)
+      );
+      toast.promise(promise, {
+        loading: "Creating a new note...",
+        success: "New note created!",
+        error: "Failed to create a new note.",
+      });
+    }
+  };
 
   const handleMouseEnter = (index: number) => {
     setShowButton(index);
@@ -132,7 +152,10 @@ const MakeCalendar = () => {
                 <span className={styles.day}>{format(v, "d")}</span>
                 {today && <span className={styles.today}>(오늘)</span>}
                 {showButton === i && (
-                  <PlusCircle className="w-4 h-4 cursor-pointer" />
+                  <PlusCircle
+                    className="w-4 h-4 cursor-pointer"
+                    onClick={handleCalendarDocument}
+                  />
                 )}
               </div>
             </div>

@@ -52,10 +52,10 @@ export const create = mutation({
 });
 
 export const getById = query({
-  args: { newCalendar: v.id("calendars") },
+  args: { calendarId: v.id("calendars") },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
-    const calendar = await ctx.db.get(args.newCalendar);
+    const calendar = await ctx.db.get(args.calendarId);
     if (!calendar) {
       throw new Error("Not found");
     }
