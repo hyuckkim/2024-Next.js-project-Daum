@@ -2,11 +2,16 @@
 
 import { useTheme } from "next-themes";
 import { defaultBlockSpecs } from "@blocknote/core";
-import { BlockNoteView, getDefaultReactSlashMenuItems, useBlockNote } from "@blocknote/react";
+import {
+  BlockNoteView,
+  getDefaultReactSlashMenuItems,
+  useBlockNote,
+} from "@blocknote/react";
 import "@blocknote/core/style.css";
 
 import { useEdgeStore } from "@/lib/edgestore";
 import { CheckBoxBlockSpec, insertCheckBoxBlock } from "@/blocks/checkbox";
+import { chartBlock, insertChartBlock } from "./blocks/chart";
 
 interface EditorProps {
   onChange: (value: string) => void;
@@ -37,11 +42,13 @@ const Editor = ({ onChange, initialContent, editable }: EditorProps) => {
     blockSpecs: {
       ...defaultBlockSpecs,
       checkbox: CheckBoxBlockSpec,
+      chart: chartBlock,
     },
     slashMenuItems: [
       ...getDefaultReactSlashMenuItems(),
       insertCheckBoxBlock,
-    ]
+      insertChartBlock,
+    ],
   });
 
   return (
