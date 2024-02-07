@@ -41,7 +41,7 @@ const Editor = ({ onChange, initialContent, editable }: EditorProps) => {
 
     blockSpecs: {
       ...defaultBlockSpecs,
-      checkbox: CheckBoxBlockSpec,
+      checkboxListItem: CheckBoxBlockSpec,
       chart: chartBlock,
     },
     slashMenuItems: [

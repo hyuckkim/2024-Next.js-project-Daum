@@ -4,7 +4,7 @@ import { CheckSquare } from "lucide-react";
 
 export const CheckBoxBlockSpec = createReactBlockSpec(
   {
-    type: "checkbox",
+    type: "checkboxListItem",
     propSchema: {
       ...defaultProps,
       checked: {
@@ -16,13 +16,13 @@ export const CheckBoxBlockSpec = createReactBlockSpec(
   {
     render: ({ block, editor, contentRef }) => {
       return (
-        <div className={"checkbox"}>
+        <div className={"checkboxListItem"}>
           <div className="flex">
             <input
               type="checkbox"
               checked={block.props.checked}
               onChange={e => (editor.isEditable && editor.updateBlock(block, {
-                type: "checkbox",
+                type: "checkboxListItem",
                 props: {
                   checked: e.target.checked
                 }
@@ -38,13 +38,13 @@ export const CheckBoxBlockSpec = createReactBlockSpec(
 );
 
 export const insertCheckBoxBlock: ReactSlashMenuItem<
-  BlockSchemaWithBlock<"checkbox", typeof CheckBoxBlockSpec.config>
+  BlockSchemaWithBlock<"checkboxListItem", typeof CheckBoxBlockSpec.config>
 > = {
   name: "checkbox",
   execute: (editor) => {
     editor.updateBlock(
       editor.getTextCursorPosition().block, {
-        type: "checkbox",
+        type: "checkboxListItem",
         props: { checked: false }
       }
     );
