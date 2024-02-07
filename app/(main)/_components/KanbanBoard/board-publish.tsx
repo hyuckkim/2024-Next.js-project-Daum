@@ -26,7 +26,7 @@ export const PublishBoard = ({ initialData }: PublishProps) => {
   const [copied, setCopied] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const url = `${origin}/plans/${initialData._id}`;
+  const url = `${origin}/kanbanview/${initialData._id}`;
 
   const onPublish = () => {
     setIsSubmitting(true);

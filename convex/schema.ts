@@ -31,5 +31,6 @@ export default defineSchema({
     content: v.optional(v.string()),
     icon: v.optional(v.string()),
     isPublished: v.boolean(),
+    connectedCalendar: v.optional(v.id("calendars")),
   }).index("by_user", ["userId"]),
 });

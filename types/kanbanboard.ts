@@ -15,6 +15,7 @@ export type KanbanBoardDocument = {
 
   color?: { light: string, dark: string },
   priority?: 1 | 2 | 3,
+  memo?: string,
 };
 
 

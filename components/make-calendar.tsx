@@ -18,10 +18,20 @@ import {
   isSunday,
 } from "date-fns";
 import { date } from "zod";
+import { PlusCircle } from "lucide-react";
 
 const MakeCalendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [checkedDates, setCheckedDates] = useState<number[]>([]);
+  const [showButton, setShowButton] = useState<number>();
+
+  const handleMouseEnter = (index: number) => {
+    setShowButton(index);
+  };
+
+  const handleMouseLeave = () => {
+    setShowButton(undefined);
+  };
 
   const monthStart = startOfMonth(currentDate);
   const monthEnd = endOfMonth(currentDate);
@@ -97,6 +107,9 @@ const MakeCalendar = () => {
           const validation = getMonth(currentDate) === getMonth(v);
           const today =
             format(new Date(), "yyyyMMdd") === format(v, "yyyyMMdd");
+
+          const hasPost = checkedDates.includes(i);
+
           if (validation && isSaturday(v)) {
             style = {
               color: "blue",
@@ -112,11 +125,15 @@ const MakeCalendar = () => {
               key={`date${i}`}
               className={validation ? styles.currentMonth : styles.diffMonth}
               style={style}
+              onMouseEnter={() => handleMouseEnter(i)}
+              onMouseLeave={handleMouseLeave}
             >
               <div className={styles.topLine}>
                 <span className={styles.day}>{format(v, "d")}</span>
-                {checkedDates && <span>V</span>}
                 {today && <span className={styles.today}>(오늘)</span>}
+                {showButton === i && (
+                  <PlusCircle className="w-4 h-4 cursor-pointer" />
+                )}
               </div>
             </div>
           );

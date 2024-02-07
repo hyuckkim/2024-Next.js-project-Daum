@@ -2,7 +2,7 @@
 
 import { Doc, Id } from "@/convex/_generated/dataModel"
 import { Skeleton } from "../ui/skeleton"
-import { File, MoreHorizontal, Trash, SquareSlash, CheckSquare, Flag } from "lucide-react"
+import { File, MoreHorizontal, Trash, SquareSlash, CheckSquare, Flag, TextIcon, ListChecks } from "lucide-react"
 import Link from "next/link"
 import { KanbanBoardProps } from "@/hooks/use-kanban-board"
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
@@ -12,6 +12,7 @@ import { useTheme } from "next-themes";
 import { KanbanBoardDocument } from "@/types/kanbanboard";
 import { ElementRef, useRef } from "react";
 import { toast } from "sonner";
+import { BoardDocumentTitle } from "./board-document-title";
 
 export const BoardDocument = ({
   _id,
@@ -19,6 +20,7 @@ export const BoardDocument = ({
     _id: id,
     color,
     priority,
+    memo,
   },
   document,
   editable,
@@ -115,15 +117,10 @@ export const BoardDocument = ({
     >
       <div className="flex justify-between">
         <div className="m-2 flex">
-          <Link
-            href={`/documents/${document._id}`}
-            className="">
-              {document.icon ? (
-                <p className="mr-2 text-[18px]">{document.icon}</p>
-              ) : (
-                <File className="mr-2 h-4 w-4" />
-              )}
-          </Link>
+          <BoardDocumentTitle
+            document={document}
+            preview={!editable}
+          />
           <div className="text-foreground">
             {document.title}
           </div>
@@ -175,14 +172,18 @@ export const BoardDocument = ({
               </div>
               <div className="p-1 flex">
                 {priorityColors.map((c, i) => (
-                  <Flag 
-                    className="w-5 h-5 p-0.5"
-                    color={c}
-                    strokeWidth={(priority === i + 1) ? 4 : 2.5}
-                    role="button"
+                  <div
                     key={c}
-                    onClick={() => onDocumentSetAttribute(document._id, {priority: i + 1})}
-                  />
+                    title={`priority: ${i + 1}`}
+                  >
+                    <Flag 
+                      className="w-5 h-5 p-0.5"
+                      color={c}
+                      strokeWidth={(priority === i + 1) ? 4 : 2.5}
+                      role="button"
+                      onClick={() => onDocumentSetAttribute(document._id, {priority: i + 1})}
+                    />
+                  </div>
                 ))
                 }
                 <Flag 
@@ -192,15 +193,31 @@ export const BoardDocument = ({
                   onClick={() => onDocumentSetAttribute(document._id, {priority: undefined})}
                 />
               </div>
+              <div className="p-1 flex items-center">
+                <ListChecks className="w-4 h-4 mr-2"/>
+                <input
+                  className="w-full h-full text-sm p-1 bg-neutral-100 dark:bg-neutral-900"
+                  value={memo}
+                  onChange={e => onDocumentSetAttribute(document._id, {memo: e.target.value})}
+                />
+              </div>
             </PopoverContent>
           </Popover>
         </div>
       </div>
-      <div className="mx-1 text-xs text-muted-foreground overflow-hidden flex items-center">
+      <div className="mx-1 text-xs text-muted-foreground overflow-hidden flex items-center space-x-4">
         {checks && (
-          <div className="flex space-x-4">
+          <div className="flex">
             <CheckSquare className="w-4 h-4 mr-2" strokeWidth={1.5} />
             {checks}
+          </div>
+        )}
+        {memo && (
+          <div className="flex">
+            <ListChecks className="w-4 h-4 mr-2" />
+            <div className="text-nowrap overflow-hidden text-ellipsis max-w-16">
+              {memo}
+            </div>
           </div>
         )}
       </div>
