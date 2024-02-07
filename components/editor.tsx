@@ -46,8 +46,8 @@ const Editor = ({ onChange, initialContent, editable }: EditorProps) => {
     },
     slashMenuItems: [
       ...getDefaultReactSlashMenuItems(),
-      insertCheckBoxBlock,
       insertChartBlock,
+      insertCheckBoxBlock,
     ],
   });
 
