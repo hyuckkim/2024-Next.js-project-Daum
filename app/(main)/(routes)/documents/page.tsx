@@ -29,7 +29,6 @@ const DocumentsPage = () => {
 
   return (
     <div className="h-full flex flex-col items-center justify-center space-y-4">
-      This is a protected DocumentsPage
       <Image
         src="/empty.png"
         height="300"
