@@ -4,18 +4,18 @@ import React, { ElementRef, useRef, useState } from "react";
 import { Doc, Id } from "@/convex/_generated/dataModel";
 import { KanbanBoardProps } from "@/hooks/use-kanban-board";
 import TextareaAutoSize from "react-textarea-autosize";
-
-import { cn } from "@/lib/utils";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { Button } from "../ui/button";
-import { Plus, Search, Settings, Trash } from "lucide-react";
-import { BoardDocument } from "./board-document";
-import { Input } from "../ui/input";
-import { KanbanBoardDocument, KanbanBoardElement } from "@/components/KanbanBoard/kanbanboard.types";
-import { useTheme } from "next-themes";
-import { useMutation } from "convex/react";
-import { api } from "@/convex/_generated/api";
 import { useRouter } from "next/navigation";
+import { useTheme } from "next-themes";
+
+import { useMutation } from "convex/react";
+import { cn } from "@/lib/utils";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Plus, Search, Settings, Trash } from "lucide-react";
+import { BoardDocument } from "@/components/KanbanBoard/board-document";
+import { KanbanBoardDocument, KanbanBoardElement } from "@/components/KanbanBoard/kanbanboard.types";
+import { api } from "@/convex/_generated/api";
 import { toast } from "sonner";
 
 export const BoardElement = ({

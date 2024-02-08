@@ -1,18 +1,16 @@
 "use client";
 
-import { Doc, Id } from "@/convex/_generated/dataModel"
-import { Skeleton } from "../ui/skeleton"
-import { File, MoreHorizontal, Trash, SquareSlash, CheckSquare, Flag, TextIcon, ListChecks } from "lucide-react"
-import Link from "next/link"
-import { KanbanBoardProps } from "@/hooks/use-kanban-board"
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { Button } from "../ui/button";
-import { cn } from "@/lib/utils";
-import { useTheme } from "next-themes";
-import { KanbanBoardDocument } from "@/components/KanbanBoard/kanbanboard.types";
 import { ElementRef, useRef } from "react";
+import { Doc, Id } from "@/convex/_generated/dataModel"
+import { useTheme } from "next-themes";
+import { MoreHorizontal, Trash, SquareSlash, CheckSquare, Flag, ListChecks } from "lucide-react"
+import { KanbanBoardProps } from "@/hooks/use-kanban-board"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { KanbanBoardDocument } from "@/components/KanbanBoard/kanbanboard.types";
+import { BoardDocumentTitle } from "@/components/KanbanBoard/board-document-title";
 import { toast } from "sonner";
-import { BoardDocumentTitle } from "./board-document-title";
 
 export const BoardDocument = ({
   _id,
