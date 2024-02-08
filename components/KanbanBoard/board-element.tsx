@@ -11,7 +11,7 @@ import { Button } from "../ui/button";
 import { Plus, Search, Settings, Trash } from "lucide-react";
 import { BoardDocument } from "./board-document";
 import { Input } from "../ui/input";
-import { KanbanBoardDocument, KanbanBoardElement } from "@/types/kanbanboard";
+import { KanbanBoardDocument, KanbanBoardElement } from "@/components/KanbanBoard/kanbanboard.types";
 import { useTheme } from "next-themes";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";

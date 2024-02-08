@@ -9,7 +9,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { useTheme } from "next-themes";
-import { KanbanBoardDocument } from "@/types/kanbanboard";
+import { KanbanBoardDocument } from "@/components/KanbanBoard/kanbanboard.types";
 import { ElementRef, useRef } from "react";
 import { toast } from "sonner";
 import { BoardDocumentTitle } from "./board-document-title";

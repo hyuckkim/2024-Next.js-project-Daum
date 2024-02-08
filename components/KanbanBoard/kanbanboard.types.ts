@@ -18,7 +18,6 @@ export type KanbanBoardDocument = {
   memo?: string,
 };
 
-
 export const newKanbanBoard = (
   ...names: string[]
 ):

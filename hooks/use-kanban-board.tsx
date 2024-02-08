@@ -1,5 +1,5 @@
 import { Id } from "@/convex/_generated/dataModel";
-import { KanbanBoard, generateId, newKanbanBoard } from "@/types/kanbanboard"
+import { KanbanBoard, generateId, newKanbanBoard } from "@/components/KanbanBoard/kanbanboard.types"
 import { useEffect, useState } from "react"
 
 export interface KanbanBoardProps {
