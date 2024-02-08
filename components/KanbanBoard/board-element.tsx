@@ -331,7 +331,6 @@ export const BoardElement = ({
             />
             <BoardDocument
               boardDocument={document.board}
-              _id={_id}
               document={document.doc}
               editable={editable}
               editor={editor}

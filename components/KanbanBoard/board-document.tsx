@@ -13,7 +13,6 @@ import { BoardDocumentTitle } from "@/components/KanbanBoard/board-document-titl
 import { toast } from "sonner";
 
 export const BoardDocument = ({
-  _id,
   boardDocument: {
     _id: id,
     color,
@@ -28,7 +27,6 @@ export const BoardDocument = ({
   },
   onDragChange,
 }: {
-  _id: string,
   boardDocument: KanbanBoardDocument
   document: Doc<"documents">,
   editable?: boolean,
