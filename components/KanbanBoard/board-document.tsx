@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils";
 import { KanbanBoardDocument } from "@/components/KanbanBoard/kanbanboard.types";
 import { BoardDocumentTitle } from "@/components/KanbanBoard/board-document-title";
 import { toast } from "sonner";
+import { BoardColorPicker } from "@/app/(main)/_components/KanbanBoard/board-color-picker";
 
 export const BoardDocument = ({
   boardDocument: {
@@ -50,6 +51,7 @@ export const BoardDocument = ({
   ];
 
   const colors = [
+    undefined,
     { light: "#fecaca", dark: "#b91c1c" },
     { light: "#fed7aa", dark: "#c2410c" },
     { light: "#fef08a", dark: "#a16207" },
@@ -145,27 +147,11 @@ export const BoardDocument = ({
                   Delete
                 </Button>
               </div>
-              <div className="p-1 flex justify-around">
-                <SquareSlash
-                  className="h-4 w-4"
-                  role="button"
-                  onClick={() => onDocumentSetAttribute(document._id, {color: undefined})}
-                />
-                {colors.map(c => (
-                  <div
-                    key={c.light}
-                    role="button"
-                    className={cn(
-                      "h-4 w-4 rounded-sm",
-                      color?.light === c.light && "border-2 border-neutral-500 dark:border-neutral-400"
-                    )}
-                    style={{
-                      backgroundColor: resolvedTheme === "dark" ? c.dark : c.light
-                    }}
-                    onClick={() => onDocumentSetAttribute(document._id, {color: c})}
-                  />
-                ))}
-              </div>
+              <BoardColorPicker
+                colors={colors}
+                currentColor={color}
+                onChangeColor={(c) => onDocumentSetAttribute(document._id, {color: c})}
+              />
               <div className="p-1 flex">
                 {priorityColors.map((c, i) => {
                   const is123 = (p: number): p is 1 | 2 | 3 => p === 1 || p === 2 || p === 3;
