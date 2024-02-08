@@ -167,20 +167,24 @@ export const BoardDocument = ({
                 ))}
               </div>
               <div className="p-1 flex">
-                {priorityColors.map((c, i) => (
-                  <div
-                    key={c}
-                    title={`priority: ${i + 1}`}
-                  >
-                    <Flag 
-                      className="w-5 h-5 p-0.5"
-                      color={c}
-                      strokeWidth={(priority === i + 1) ? 4 : 2.5}
-                      role="button"
-                      onClick={() => onDocumentSetAttribute(document._id, {priority: i + 1})}
-                    />
-                  </div>
-                ))
+                {priorityColors.map((c, i) => {
+                  const is123 = (p: number): p is 1 | 2 | 3 => p === 1 || p === 2 || p === 3;
+                  const period = i + 1;
+                  return (
+                    <div
+                      key={c}
+                      title={`priority: ${period}`}
+                    >
+                      <Flag 
+                        className="w-5 h-5 p-0.5"
+                        color={c}
+                        strokeWidth={(priority === period) ? 4 : 2.5}
+                        role="button"
+                        onClick={() => onDocumentSetAttribute(document._id, {priority: is123(period) ? period : undefined})}
+                      />
+                    </div>
+                  )
+                })
                 }
                 <Flag 
                   className="w-5 h-5 p-0.5"
