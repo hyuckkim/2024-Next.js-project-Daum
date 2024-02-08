@@ -10,7 +10,7 @@ import {
 import "@blocknote/core/style.css";
 
 import { useEdgeStore } from "@/lib/edgestore";
-import { CheckBoxBlockSpec, insertCheckBoxBlock } from "@/blocks/checkbox";
+import { CheckBoxBlockSpec, insertCheckBoxBlock } from "@/components/blocks/checkbox";
 import { chartBlock, insertChartBlock } from "./blocks/chart";
 
 interface EditorProps {
