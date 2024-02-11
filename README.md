@@ -1,6 +1,10 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+
+## Project Name
+![daum-high-resolution-logo](https://github.com/Google-Developer-Student-Clubs-TUK/2024-Next.js-project-Daum/assets/127572801/7cb03bbd-2aeb-454b-b5a9-0e0e80d491d2)
 해당 레포 목적: Next.js의 프로그래밍 과정을 익히고 우리만의 Notion 작성을 위한 프로젝트를 위해 구현하는 레포 입니다.
+
 
 ## Getting Started
 
