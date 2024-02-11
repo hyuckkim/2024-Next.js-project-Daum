@@ -19,7 +19,7 @@ export type KanbanBoardDocument = {
 };
 
 
-export const newKanbanBoard = (
+export const createNewKanbanBoard = (
   ...names: string[]
 ):
 KanbanBoard => {
