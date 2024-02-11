@@ -1,12 +1,23 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 
-## Project Name
+## 💻Project Name
 ![daum-high-resolution-logo](https://github.com/Google-Developer-Student-Clubs-TUK/2024-Next.js-project-Daum/assets/127572801/cca04145-0b5b-45b6-b98f-ba4d5de5c6d3)
 해당 레포 목적: Next.js의 프로그래밍 과정을 익히고 우리만의 Notion 작성을 위한 프로젝트를 위해 구현하는 레포 입니다.
 
+## 📝 Features
+- 차트 기능
+- 캘린더 기능
+- 칸반보드 기능
+- ChatGPT AI 기능
 
-## Getting Started
+## 👨‍👩‍👧‍👦 팀원
+[이태형](https://github.com/plus100kt)|[전서진](https://github.com/seojinJeon)|[정준영](https://github.com/Jayjunyoung)|[김광혁](https://github.com/hyuckkim)|
+------|--------------------------------------|------|-----|
+![이태형](https://github.com/Google-Developer-Student-Clubs-TUK/2024-Next.js-project-Daum/assets/127572801/6b5e41ab-b9b7-46a2-9981-c9040368d5f7) | ![전서진](https://github.com/Google-Developer-Student-Clubs-TUK/2024-Next.js-project-Daum/assets/127572801/44d48c92-a4e6-4c14-8fd0-76bc60bdf807) | ![정준영](https://github.com/Google-Developer-Student-Clubs-TUK/2024-Next.js-project-Daum/assets/127572801/96c5dd41-d14d-467d-b104-eb66cbacfe0a) | ![김광혁](https://github.com/Google-Developer-Student-Clubs-TUK/2024-Next.js-project-Daum/assets/127572801/c358d5aa-0820-4765-9942-562b3f330540) | 
+Front-end Developer, AI|Front-end Developer|Front-end Developer|Front-end Developer|
+
+## 💡 Getting Started
 
 First, run the development server:
 
