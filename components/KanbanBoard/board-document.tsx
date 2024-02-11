@@ -2,7 +2,7 @@
 
 import { Doc, Id } from "@/convex/_generated/dataModel"
 import { Skeleton } from "../ui/skeleton"
-import { File, MoreHorizontal, Trash, SquareSlash, CheckSquare, Flag, TextIcon, ListChecks } from "lucide-react"
+import { File, MoreHorizontal, Trash, SquareSlash, CheckSquare, Flag, TextIcon, ListChecks, AlarmCheck } from "lucide-react"
 import Link from "next/link"
 import { KanbanBoardProps } from "@/hooks/use-kanban-board"
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
@@ -31,10 +31,10 @@ export const BoardDocument = ({
   onDragChange,
 }: {
   _id: string,
-  boardDocument: KanbanBoardDocument
+  boardDocument: KanbanBoardDocument,
   document: Doc<"documents">,
   editable?: boolean,
-  editor: KanbanBoardProps
+  editor: KanbanBoardProps,
   onDragChange?: (status: ("before" | "after" | "none")) => void,
 }) => {
   const { resolvedTheme } = useTheme();
@@ -217,6 +217,14 @@ export const BoardDocument = ({
             <ListChecks className="w-4 h-4 mr-2" />
             <div className="text-nowrap overflow-hidden text-ellipsis max-w-16">
               {memo}
+            </div>
+          </div>
+        )}
+        {false && (
+          <div className="flex">
+            <AlarmCheck className="w-4 h-4 mr-2" />
+            <div className="text-nowrap overflow-hidden text-ellipsis max-w-20">
+              {"in 1234 years"}
             </div>
           </div>
         )}
