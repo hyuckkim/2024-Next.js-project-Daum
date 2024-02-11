@@ -13,7 +13,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## 👨‍👩‍👧‍👦 팀원
 [이태형](https://github.com/plus100kt)|[전서진](https://github.com/seojinJeon)|[정준영](https://github.com/Jayjunyoung)|[김광혁](https://github.com/hyuckkim)|
-------|--------------------------------------|------|-----|
+--------------------------------------|---------------------------------------|-----------------------------------------|-------------------------------------|
 ![이태형](https://github.com/Google-Developer-Student-Clubs-TUK/2024-Next.js-project-Daum/assets/127572801/6b5e41ab-b9b7-46a2-9981-c9040368d5f7) | ![전서진](https://github.com/Google-Developer-Student-Clubs-TUK/2024-Next.js-project-Daum/assets/127572801/44d48c92-a4e6-4c14-8fd0-76bc60bdf807) | ![정준영](https://github.com/Google-Developer-Student-Clubs-TUK/2024-Next.js-project-Daum/assets/127572801/96c5dd41-d14d-467d-b104-eb66cbacfe0a) | ![김광혁](https://github.com/Google-Developer-Student-Clubs-TUK/2024-Next.js-project-Daum/assets/127572801/c358d5aa-0820-4765-9942-562b3f330540) | 
 Front-end Developer, AI|Front-end Developer|Front-end Developer|Front-end Developer|
 
