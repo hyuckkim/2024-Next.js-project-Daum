@@ -32,7 +32,6 @@ const MakeCalendar = ({
   editable,
 }: CalendarProps) => {
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [checkedDates, setCheckedDates] = useState<number[]>([]);
   const [showButton, setShowButton] = useState<number>();
   const [showDocument, setShowDocument] = useState<number>();
   const [clickedButton, setClickedButton] = useState<boolean>(false);
@@ -70,18 +69,6 @@ const MakeCalendar = ({
   const nextMonthHandler = useCallback(() => {
     setCurrentDate(addMonths(currentDate, 1));
   }, [currentDate]);
-
-  const dateClick = (index: number) => {
-    // 클릭한 날짜의 index를 상태에 추가 또는 제거
-    setCheckedDates((prevCheckedDates) => {
-      const isDateChecked = prevCheckedDates.includes(index);
-      if (isDateChecked) {
-        return prevCheckedDates.filter((dateIndex) => dateIndex !== index);
-      } else {
-        return [...prevCheckedDates, index];
-      }
-    });
-  };
 
   const prevMonthHandler = useCallback(() => {
     setCurrentDate(subMonths(currentDate, 1));
@@ -134,7 +121,6 @@ const MakeCalendar = ({
             <CalendarDay
               day={v}
               today={currentDate}
-              onClick={() => dateClick(i)}
               
               onMouseEnter={() => handleMouseEnter(i)}
               onMouseLeave={handleMouseLeave}

@@ -7,7 +7,6 @@ import editor from "./editor";
 export const CalendarDay = ({
   day: v,
   today: currentDate,
-  onClick,
   onMouseEnter,
   onMouseLeave,
   highlighted,
@@ -21,7 +20,6 @@ export const CalendarDay = ({
   onMouseLeave: () => void,
   highlighted?: boolean,
 
-  onClick: () => void,
   addDocument: () => void,
 
   content?: any,
@@ -45,7 +43,6 @@ export const CalendarDay = ({
   
   return (
     <div
-      onClick={onClick}
       className={validation ? styles.currentMonth : styles.diffMonth}
       style={style}
       onMouseEnter={onMouseEnter}
