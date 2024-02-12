@@ -9,7 +9,6 @@ import { CalendarItem } from "./calendar-item";
 
 export const CalendarList = () => {
   const params = useParams();
-  console.log(params);
   const router = useRouter();
   const calendars = useQuery(api.calendars.getSidebar, {});
 

@@ -34,6 +34,7 @@ export const archive = mutation({
 export const create = mutation({
   args: {
     title: v.string(),
+    content: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
@@ -44,6 +45,7 @@ export const create = mutation({
     const calendar = await ctx.db.insert("calendars", {
       title: args.title,
       userId,
+      content: args.content,
       isArchived: false,
       isPublished: false,
     });
@@ -99,7 +101,6 @@ export const update = mutation({
     id: v.id("calendars"),
     title: v.optional(v.string()),
     content: v.optional(v.string()),
-    icon: v.optional(v.string()),
     isPublished: v.optional(v.boolean()),
   },
   handler: async (ctx, args) => {

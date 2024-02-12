@@ -10,6 +10,7 @@ import { Toolbar } from "@/components/toolbar";
 import { Cover } from "@/components/cover";
 import { Skeleton } from "@/components/ui/skeleton";
 import MakeCalendar from "@/components/make-calendar";
+import { usePathname } from "next/navigation";
 
 interface CalendarIdPageProps {
   params: {
@@ -18,12 +19,18 @@ interface CalendarIdPageProps {
 }
 
 const CalendarIdPage = ({ params }: CalendarIdPageProps) => {
-  const Editor = useMemo(
-    //서버사이드렌더링은 비활성화
-    () => dynamic(() => import("@/components/editor"), { ssr: false }),
-    []
-  );
+  const update = useMutation(api.calendars.update);
 
+  const onUpdate = (content: string) => {
+    update({
+      id: params.calendarId,
+      content,
+    });
+  };
+
+  const pathname = usePathname();
+  const finalUrl = pathname.split("/");
+  const resultUrl = finalUrl[finalUrl.length - 1];
   //인자로 calendar.id 넘김 -> Query로 작성한 getById 호출
   const calendar = useQuery(api.calendars.getById, {
     calendarId: params.calendarId,
@@ -49,7 +56,14 @@ const CalendarIdPage = ({ params }: CalendarIdPageProps) => {
     return <div>Not found</div>;
   }
 
-  return <MakeCalendar />;
+  return (
+    <MakeCalendar
+      initialContent={calendar.content}
+      calendarId={calendar._id}
+      editable={true}
+      onChange={onUpdate}
+    />
+  );
 };
 
 export default CalendarIdPage;

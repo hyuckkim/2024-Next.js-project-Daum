@@ -20,30 +20,48 @@ import {
 import { date } from "zod";
 import { PlusCircle } from "lucide-react";
 import router from "next/router";
-import { useMutation } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
+import { useParams, usePathname } from "next/navigation";
 import { toast } from "sonner";
+import { Id } from "@/convex/_generated/dataModel";
+import { useCalendarDocument } from "@/hooks/use-calendar-document";
+import { Calendar, generateId } from "@/types/calendar";
 
-const MakeCalendar = () => {
+interface CalendarProps {
+  initialContent?: string;
+  onChange: (value: string) => void;
+  calendarId: Id<"calendars">;
+  editable: boolean;
+}
+
+const MakeCalendar = ({
+  initialContent,
+  onChange,
+  calendarId,
+  editable,
+}: CalendarProps) => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [checkedDates, setCheckedDates] = useState<number[]>([]);
   const [showButton, setShowButton] = useState<number>();
+  const [showDocument, setShowDocument] = useState<number>();
   const [clickedButton, setClickedButton] = useState<boolean>(false);
-  const create = useMutation(api.documents.create);
+  //const createCalendarDocument = useMutation(api.calendars.update);
 
-  const handleCalendarDocument = () => {
-    setClickedButton(true);
+  const handleCalendarDocument = (index: number) => {
+    setClickedButton(clickedButton === false ? true : clickedButton);
+    setShowDocument(index);
     if (clickedButton) {
-      const promise = create({ title: "Untitled" }).then((documentId) =>
-        router.push(`/documents/${documentId}`)
-      );
-      toast.promise(promise, {
-        loading: "Creating a new note...",
-        success: "New note created!",
-        error: "Failed to create a new note.",
-      });
+      editor.onNewElement();
     }
   };
+
+  const editor = useCalendarDocument({
+    initialContent: initialContent ? JSON.parse(initialContent) : undefined,
+    onBoardChanged: (calendar) => {
+      onChange(JSON.stringify(calendar, null, 2));
+    },
+  });
 
   const handleMouseEnter = (index: number) => {
     setShowButton(index);
@@ -128,7 +146,7 @@ const MakeCalendar = () => {
           const today =
             format(new Date(), "yyyyMMdd") === format(v, "yyyyMMdd");
 
-          const hasPost = checkedDates.includes(i);
+          //const hasPost = checkedDates.includes(i);
 
           if (validation && isSaturday(v)) {
             style = {
@@ -154,10 +172,15 @@ const MakeCalendar = () => {
                 {showButton === i && (
                   <PlusCircle
                     className="w-4 h-4 cursor-pointer"
-                    onClick={handleCalendarDocument}
+                    onClick={() => handleCalendarDocument(i)}
                   />
                 )}
               </div>
+              {clickedButton && showDocument === i && (
+                <div className="w-80% h-6 hover:bg-gray-400 border-blue-500 border-1 bg-[#DDE5FF] rounded-md flex flex-row justify-center items-center mt-5 mx-5">
+                  {editor.content && initialContent}
+                </div>
+              )}
             </div>
           );
         })}

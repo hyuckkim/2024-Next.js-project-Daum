@@ -13,7 +13,7 @@ import {
   startOfWeek,
   endOfWeek,
 } from "date-fns";
-import { Day } from "../Calendar/Calendar.types";
+import { Day } from "./Calendar.types";
 
 export function useWeek({
   month,
