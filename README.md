@@ -1,15 +1,21 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
-
-## 💻Project Name
+## 💻 Project Name
 ![daum-high-resolution-logo](https://github.com/Google-Developer-Student-Clubs-TUK/2024-Next.js-project-Daum/assets/127572801/cca04145-0b5b-45b6-b98f-ba4d5de5c6d3)
-#### 해당 레포 목적: Next.js의 프로그래밍 과정을 익히고 우리만의 Notion 작성을 위한 프로젝트를 위해 구현하는 레포 입니다.
+#### 목적: Next.js의 프로그래밍 과정을 익히고 우리만의 Notion 작성을 위한 프로젝트 구현
 
 ## 📝 Function
 - 차트 기능
 - 캘린더 기능
 - 칸반보드 기능
 - ChatGPT AI 기능
+
+## 🔧Tech Stack
+<p align="left">
+  <img src="https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white">
+  <img src="https://img.shields.io/badge/typescript-3178C6?style=for-the-badge&logo=typescript&logoColor=white">
+  <img src="https://img.shields.io/badge/tailwindcss-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white">
+  <img src="https://img.shields.io/badge/chart.js-FF6384?style=for-the-badge&logo=chartdotjs&logoColor=white">  
+  <img src="https://img.shields.io/badge/clerk-6C47FF?style=for-the-badge&logo=clerk&logoColor=white">  
+</p>
 
 ## 👨‍👩‍👧‍👦 Members
 [이태형](https://github.com/plus100kt)|[전서진](https://github.com/seojinJeon)|[정준영](https://github.com/Jayjunyoung)|[김광혁](https://github.com/hyuckkim)|
@@ -19,7 +25,20 @@ Front-end Developer, AI|Front-end Developer|Front-end Developer|Front-end Develo
 
 ## 💡 Getting Started
 
-First, run the development server:
+### Installation
+
+#### Clone The Repository
+```bash
+$ git clone https://github.com/Google-Developer-Student-Clubs-TUK/2024-Next.js-project-Daum.git
+```
+
+#### 서버 실행
+
+```bash
+npm i
+# or
+npm install
+```
 
 ```bash
 npm run dev
