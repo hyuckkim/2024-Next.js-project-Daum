@@ -17,16 +17,8 @@ import {
   isSaturday,
   isSunday,
 } from "date-fns";
-import { date } from "zod";
-import { PlusCircle } from "lucide-react";
-import router from "next/router";
-import { useMutation, useQuery } from "convex/react";
-import { api } from "@/convex/_generated/api";
-import { useParams, usePathname } from "next/navigation";
-import { toast } from "sonner";
-import { Id } from "@/convex/_generated/dataModel";
 import { useCalendarDocument } from "@/hooks/use-calendar-document";
-import { Calendar, generateId } from "@/types/calendar";
+import { CalendarDay } from "./calendar-day";
 
 interface CalendarProps {
   initialContent?: string;
@@ -104,7 +96,6 @@ const MakeCalendar = ({
     }
     return monthArray;
   }, [startDate, endDate]);
-
   return (
     <section className={styles.calendar}>
       <div className={styles.yearTitle}>{format(currentDate, "yyyy년")}</div>
@@ -139,49 +130,21 @@ const MakeCalendar = ({
       </div>
       <div className={styles.dateContainer}>
         {createMonth.map((v, i) => {
-          let style;
-          const validation = getMonth(currentDate) === getMonth(v);
-          const today =
-            format(new Date(), "yyyyMMdd") === format(v, "yyyyMMdd");
-
-          //const hasPost = checkedDates.includes(i);
-
-          if (validation && isSaturday(v)) {
-            style = {
-              color: "blue",
-            };
-          } else if (validation && isSunday(v)) {
-            style = {
-              color: "red",
-            };
-          }
           return (
-            <div
+            <CalendarDay
+              day={v}
+              today={currentDate}
               onClick={() => dateClick(i)}
-              key={`date${i}`}
-              className={validation ? styles.currentMonth : styles.diffMonth}
-              style={style}
+              
               onMouseEnter={() => handleMouseEnter(i)}
               onMouseLeave={handleMouseLeave}
-            >
-              <div className={styles.topLine}>
-                <span className={styles.day}>{format(v, "d")}</span>
-                {today && <span className={styles.today}>(오늘)</span>}
-                {showButton === i && (
-                  <PlusCircle
-                    className="w-4 h-4 cursor-pointer"
-                    onClick={() => handleCalendarDocument(i)}
-                  />
-                )}
-              </div>
-              {clickedButton && showDocument === i && (
-                <div className="w-80% h-6 hover:bg-gray-400 border-blue-500 border-1 bg-[#DDE5FF] rounded-md flex flex-row justify-center items-center mt-5 mx-5">
-                  {editor.content &&
-                    (initialContent === "[]" ? undefined : initialContent)}
-                </div>
-              )}
-            </div>
-          );
+              highlighted={showButton === i}
+
+              addDocument={() => handleCalendarDocument(i)}
+              key={i}
+              content={[]}
+            />
+          )
         })}
       </div>
     </section>
