@@ -57,7 +57,7 @@ const MakeCalendar = ({
     setClickedButton(clickedButton === false ? true : clickedButton);
     setShowDocument(index);
     if (clickedButton) {
-      editor.onNewElement();
+      editor.onNewElement;
     }
   };
 
@@ -176,8 +176,7 @@ const MakeCalendar = ({
               </div>
               {clickedButton && showDocument === i && (
                 <div className="w-80% h-6 hover:bg-gray-400 border-blue-500 border-1 bg-[#DDE5FF] rounded-md flex flex-row justify-center items-center mt-5 mx-5">
-                  {editor.content &&
-                    (initialContent === "[]" ? undefined : initialContent)}
+                  {editor.content && initialContent}
                 </div>
               )}
             </div>

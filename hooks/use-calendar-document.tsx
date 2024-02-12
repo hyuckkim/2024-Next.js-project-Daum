@@ -3,7 +3,7 @@ import { Calendar, generateId, newCalendarDocument } from "@/types/calendar";
 import { useEffect, useState } from "react";
 
 export interface CalendarDocumentProps {
-  [x: string]: any;
+  onNewElement: () => void;
   content: Calendar | undefined;
 
   onAddDocument: (id: string, calendar: Id<"calendars">) => void;
