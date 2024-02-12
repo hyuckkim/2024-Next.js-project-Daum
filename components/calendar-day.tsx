@@ -22,7 +22,7 @@ export const CalendarDay = ({
 
   addDocument: () => void,
 
-  content?: any,
+  content?: any[],
 }) => {
   let style;
   const validation = getMonth(currentDate) === getMonth(v);
@@ -58,11 +58,13 @@ export const CalendarDay = ({
           />
         )}
       </div>
-      {content && (
-        <div className="w-80% h-6 hover:bg-gray-400 border-blue-500 border-1 bg-[#DDE5FF] rounded-md flex flex-row justify-center items-center mt-5 mx-5">
-          {content}
+      {content && content.map(v => (
+        <div
+          key={v._id}
+          className="w-80% h-6 hover:bg-gray-400 border-blue-500 border-1 bg-[#DDE5FF] rounded-md flex flex-row justify-center items-center mt-5 mx-5">
+          {v.name}
         </div>
-      )}
+      ))}
     </div>
   );
 }

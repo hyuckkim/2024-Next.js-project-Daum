@@ -117,6 +117,7 @@ const MakeCalendar = ({
       </div>
       <div className={styles.dateContainer}>
         {createMonth.map((v, i) => {
+          const content = editor.content && editor.content.filter(v => v._id.startsWith("7"));
           return (
             <CalendarDay
               day={v}
@@ -128,7 +129,7 @@ const MakeCalendar = ({
 
               addDocument={() => handleCalendarDocument(i)}
               key={i}
-              content={[]}
+              content={content}
             />
           )
         })}
