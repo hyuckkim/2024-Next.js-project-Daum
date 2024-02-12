@@ -9,7 +9,9 @@ export type CalendarDocumentElement = {
 };
 
 export type CalendarDocument = {
-  _id: Id<"calendars">;
+  _id: string;
+  name?: string;
+  content?: [];
 };
 
 export const newCalendarDocument = (...names: string[]): Calendar => {

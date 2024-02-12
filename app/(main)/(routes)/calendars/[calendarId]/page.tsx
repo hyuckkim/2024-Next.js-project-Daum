@@ -28,13 +28,11 @@ const CalendarIdPage = ({ params }: CalendarIdPageProps) => {
     });
   };
 
-  const pathname = usePathname();
-  const finalUrl = pathname.split("/");
-  const resultUrl = finalUrl[finalUrl.length - 1];
   //인자로 calendar.id 넘김 -> Query로 작성한 getById 호출
   const calendar = useQuery(api.calendars.getById, {
     calendarId: params.calendarId,
   });
+  console.log(calendar);
 
   if (calendar === undefined) {
     return (
@@ -59,7 +57,6 @@ const CalendarIdPage = ({ params }: CalendarIdPageProps) => {
   return (
     <MakeCalendar
       initialContent={calendar.content}
-      calendarId={calendar._id}
       editable={true}
       onChange={onUpdate}
     />

@@ -1,11 +1,17 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { BlockNoteEditor, PartialBlock } from "@blocknote/core";
-import { BlockNoteView, useBlockNote } from "@blocknote/react";
+import { defaultBlockSpecs } from "@blocknote/core";
+import {
+  BlockNoteView,
+  getDefaultReactSlashMenuItems,
+  useBlockNote,
+} from "@blocknote/react";
 import "@blocknote/core/style.css";
 
 import { useEdgeStore } from "@/lib/edgestore";
+import { CheckBoxBlockSpec, insertCheckBoxBlock } from "@/blocks/checkbox";
+import { chartBlock, insertChartBlock } from "./blocks/chart";
 
 interface EditorProps {
   onChange: (value: string) => void;
@@ -25,13 +31,24 @@ const Editor = ({ onChange, initialContent, editable }: EditorProps) => {
     return response.url;
   };
 
-  const editor: BlockNoteEditor = useBlockNote({
+  const editor = useBlockNote({
     editable,
     initialContent: initialContent ? JSON.parse(initialContent) : undefined,
     onEditorContentChange: (editor) => {
       onChange(JSON.stringify(editor.topLevelBlocks, null, 2));
     },
     uploadFile: handleUpload,
+
+    blockSpecs: {
+      ...defaultBlockSpecs,
+      checkboxListItem: CheckBoxBlockSpec,
+      chart: chartBlock,
+    },
+    slashMenuItems: [
+      ...getDefaultReactSlashMenuItems(),
+      insertCheckBoxBlock,
+      insertChartBlock,
+    ],
   });
 
   return (

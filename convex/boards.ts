@@ -251,3 +251,78 @@ export const remove = mutation({
     return board;
   },
 });
+
+export const connectCalendar = mutation({
+  args: {
+    id: v.id("boards"),
+    calendar: v.id("calendars"),
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (!identity) {
+      throw new Error("Not authenticated");
+    }
+
+    const userId = identity.subject;
+
+    const existingBoard = await ctx.db.get(args.id);
+
+    if (!existingBoard) {
+      throw new Error("Not found");
+    }
+
+    if (existingBoard.userId !== userId) {
+      throw new Error("Unauthorized");
+    }
+
+    const existingCalendar = await ctx.db.get(args.calendar);
+
+    if (!existingCalendar) {
+      throw new Error("Not found");
+    }
+
+    if (existingBoard.userId !== existingBoard.userId) {
+      throw new Error("Unauthorized");
+    }
+
+    const board = await ctx.db.patch(args.id, {
+      ...existingBoard,
+      connectedCalendar: existingCalendar._id
+    });
+
+    return board;
+  }
+});
+
+export const unconnectCalendar = mutation({
+  args: {
+    id: v.id("boards"),
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (!identity) {
+      throw new Error("Not authenticated");
+    }
+
+    const userId = identity.subject;
+
+    const existingBoard = await ctx.db.get(args.id);
+
+    if (!existingBoard) {
+      throw new Error("Not found");
+    }
+
+    if (existingBoard.userId !== userId) {
+      throw new Error("Unauthorized");
+    }
+
+    const board = await ctx.db.patch(args.id, {
+      ...existingBoard,
+      connectedCalendar: undefined
+    });
+
+    return board;
+  }
+});

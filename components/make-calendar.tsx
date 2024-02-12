@@ -31,14 +31,12 @@ import { Calendar, generateId } from "@/types/calendar";
 interface CalendarProps {
   initialContent?: string;
   onChange: (value: string) => void;
-  calendarId: Id<"calendars">;
   editable: boolean;
 }
 
 const MakeCalendar = ({
   initialContent,
   onChange,
-  calendarId,
   editable,
 }: CalendarProps) => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -48,6 +46,13 @@ const MakeCalendar = ({
   const [clickedButton, setClickedButton] = useState<boolean>(false);
   //const createCalendarDocument = useMutation(api.calendars.update);
 
+  const editor = useCalendarDocument({
+    initialContent: initialContent ? JSON.parse(initialContent) : undefined,
+    onBoardChanged: (calendar) => {
+      onChange(JSON.stringify(calendar, null, 2));
+    },
+  });
+
   const handleCalendarDocument = (index: number) => {
     setClickedButton(clickedButton === false ? true : clickedButton);
     setShowDocument(index);
@@ -55,13 +60,6 @@ const MakeCalendar = ({
       editor.onNewElement();
     }
   };
-
-  const editor = useCalendarDocument({
-    initialContent: initialContent ? JSON.parse(initialContent) : undefined,
-    onBoardChanged: (calendar) => {
-      onChange(JSON.stringify(calendar, null, 2));
-    },
-  });
 
   const handleMouseEnter = (index: number) => {
     setShowButton(index);
@@ -178,7 +176,8 @@ const MakeCalendar = ({
               </div>
               {clickedButton && showDocument === i && (
                 <div className="w-80% h-6 hover:bg-gray-400 border-blue-500 border-1 bg-[#DDE5FF] rounded-md flex flex-row justify-center items-center mt-5 mx-5">
-                  {editor.content && initialContent}
+                  {editor.content &&
+                    (initialContent === "[]" ? undefined : initialContent)}
                 </div>
               )}
             </div>
