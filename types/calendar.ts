@@ -6,6 +6,7 @@ export type CalendarDocumentElement = {
   _id: string;
   name: string;
   content: CalendarDocument[];
+  calendarIndex: number;
 };
 
 export type CalendarDocument = {
@@ -20,6 +21,7 @@ export const newCalendarDocument = (...names: string[]): Calendar => {
       _id: generateId(),
       name: v,
       content: [],
+      calendarIndex: +v,
     };
   });
 };

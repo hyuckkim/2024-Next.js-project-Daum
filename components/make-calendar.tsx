@@ -45,7 +45,7 @@ const MakeCalendar = ({
     setClickedButton(clickedButton === false ? true : clickedButton);
     setShowDocument(index);
     if (clickedButton) {
-      editor.onNewElement();
+      editor.onNewElement(index);
     }
   };
   const handleMouseEnter = (index: number) => {
