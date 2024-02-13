@@ -18,7 +18,8 @@ export type KanbanBoardDocument = {
   memo?: string,
 };
 
-export const newKanbanBoard = (
+
+export const createNewKanbanBoard = (
   ...names: string[]
 ):
 KanbanBoard => {

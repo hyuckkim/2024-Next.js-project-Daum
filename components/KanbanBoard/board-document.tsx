@@ -28,10 +28,11 @@ export const BoardDocument = ({
   },
   onDragChange,
 }: {
-  boardDocument: KanbanBoardDocument
+  _id: string,
+  boardDocument: KanbanBoardDocument,
   document: Doc<"documents">,
   editable?: boolean,
-  editor: KanbanBoardProps
+  editor: KanbanBoardProps,
   onDragChange?: (status: ("before" | "after" | "none")) => void,
 }) => {
   const { resolvedTheme } = useTheme();
@@ -203,6 +204,14 @@ export const BoardDocument = ({
             <ListChecks className="w-4 h-4 mr-2" />
             <div className="text-nowrap overflow-hidden text-ellipsis max-w-16">
               {memo}
+            </div>
+          </div>
+        )}
+        {false && (
+          <div className="flex">
+            <AlarmCheck className="w-4 h-4 mr-2" />
+            <div className="text-nowrap overflow-hidden text-ellipsis max-w-20">
+              {"in 1234 years"}
             </div>
           </div>
         )}
