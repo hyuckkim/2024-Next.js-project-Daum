@@ -128,7 +128,7 @@ const MakeCalendar = ({
               onMouseLeave={handleMouseLeave}
               highlighted={showButton === i}
               addDocument={() => handleCalendarDocument(i)}
-              key={i}
+              index={i}
               content={content}
             />
           );

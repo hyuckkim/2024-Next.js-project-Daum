@@ -8,7 +8,7 @@ import { CalendarDocumentElement } from "@/types/calendar";
 export const CalendarDay = ({
   day: v,
   today: currentDate,
-  key,
+  index,
   onMouseEnter,
   onMouseLeave,
   highlighted,
@@ -17,7 +17,7 @@ export const CalendarDay = ({
 }: {
   day: Date;
   today: Date;
-  key: number;
+  index: number;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
   highlighted?: boolean;
@@ -65,7 +65,7 @@ export const CalendarDay = ({
             key={v._id}
             className="w-80% h-6 hover:bg-gray-400 border-blue-500 border-1 bg-[#DDE5FF] rounded-md flex flex-row justify-center items-center mt-5 mx-5"
           >
-            {v.name}
+            {index === i && content[i].name}
           </div>
         ))}
     </div>
