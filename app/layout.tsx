@@ -10,19 +10,19 @@ import { EdgeStoreProvider } from "@/lib/edgestore";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "tution",
+  title: "daum",
   description: "The connected workspace where better",
   icons: {
     icon: [
       {
         media: "(prefers-color-scheme: light)",
-        url: "/logo.svg",
-        href: "/logo.svg",
+        url: "/Daumlogo.svg",
+        href: "/Daumlogo.svg",
       },
       {
         media: "(prefers-color-scheme: dark)",
-        url: "/logo-dark.svg",
-        href: "/logo-dark.svg",
+        url: "/Daumlogo-dark.svg",
+        href: "/Daumlogo-dark.svg",
       },
     ],
   },

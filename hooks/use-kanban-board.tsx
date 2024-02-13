@@ -1,6 +1,12 @@
 import { Id } from "@/convex/_generated/dataModel";
-import { KanbanBoard, generateId, newKanbanBoard } from "@/types/kanbanboard"
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
+import {
+  KanbanBoard,
+  KanbanBoardDocument,
+  KanbanBoardElement,
+  generateId,
+  newKanbanBoard
+} from "@/components/KanbanBoard/kanbanboard.types";
 
 export interface KanbanBoardProps {
   content: KanbanBoard | undefined;
@@ -8,12 +14,12 @@ export interface KanbanBoardProps {
   onRemoveElement: (id: string) => void;
   onRenameElement: (id: string, name: string) => void;
   onMoveElement: (id: string, index: number) => void;
-  onElementSetAttribute: (id: string, attributes: {}) => void;
+  onElementSetAttribute: (id: string, attributes: Partial<KanbanBoardElement>) => void;
 
   onAddDocument: (id: string, document: Id<"documents">) => void;
   onMoveDocument: (id: string, document: Id<"documents">, index: number) => void,
   onRemoveDocument: (document: Id<"documents">) => void;
-  onDocumentSetAttribute: (Document: Id<"documents">, attributes: {}) => void;
+  onDocumentSetAttribute: (Document: Id<"documents">, attributes: Partial<KanbanBoardDocument>) => void;
 }
 
 export const useKanbanBoard = ({
