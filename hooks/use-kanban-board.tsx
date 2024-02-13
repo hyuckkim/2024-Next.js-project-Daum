@@ -32,21 +32,16 @@ export const useKanbanBoard = ({
   const [content, setContent] = useState(initialContent);
 
   useEffect(() => {
-    if (!content) {
-      setContent(newKanbanBoard());
-    }
-  }, [content]);
-
-  useEffect(() => {
     if (!!content) {
       onBoardChanged(content);
     }
   }, [content, onBoardChanged]);
 
   const onNewElement = () => {
-    if (!content) return;
+    const oldContent = content ?? createNewKanbanBoard();
+
     setContent([
-      ...content,
+      ...oldContent,
       {
         _id: generateId(),
         name: "untitled",
