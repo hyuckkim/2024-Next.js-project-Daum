@@ -61,7 +61,7 @@ export const CalendarDay = ({
       </div>
       {content &&
         content.map(
-          (v, i) =>
+          (v) =>
             index === v.calendarIndex && (
               <div
                 key={v._id}
