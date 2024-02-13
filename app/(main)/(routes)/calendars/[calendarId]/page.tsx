@@ -32,7 +32,6 @@ const CalendarIdPage = ({ params }: CalendarIdPageProps) => {
   const calendar = useQuery(api.calendars.getById, {
     calendarId: params.calendarId,
   });
-  console.log(calendar);
 
   if (calendar === undefined) {
     return (
