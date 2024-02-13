@@ -11,6 +11,7 @@ import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
+import { Skeleton } from "../ui/skeleton";
 
 export const guestbookBlockSpec = createReactBlockSpec(
   {
@@ -114,8 +115,13 @@ const Guestbook = ({
 
     }
   }
+  if (book === undefined) {
+    return (
+      <Skeleton className="w-full h-60" />
+    )
+  }
 
-  if (!book) {
+  if (book === null) {
     return (
       <div
         className="flex flex-col w-full h-60 rounded-lg border-2 border-dashed text-muted-foreground border-neutral-200 dark:border-neutral-700 justify-center items-center"
@@ -129,7 +135,7 @@ const Guestbook = ({
   }
 
   return (
-    <div className="flex flex-col w-full p-4 space-y-4 bg-neutral-100 rounded-lg">
+    <div className="flex flex-col w-full p-4 space-y-4 bg-neutral-100 dark:bg-neutral-900 rounded-lg">
       <div>
         <span className="mr-1">{book.comments.length}</span>
         comments
