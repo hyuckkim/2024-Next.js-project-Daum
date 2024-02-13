@@ -36,7 +36,9 @@ export const Navbar = () => {
               </Button>
             </SignInButton>
             <SignInButton mode="modal">
-              <Button size="sm">Get Daum Free</Button>
+              <Button size="sm" className="bg-orange-500 hover:bg-orange-500">
+                Get Daum Free
+              </Button>
             </SignInButton>
           </>
         )}
