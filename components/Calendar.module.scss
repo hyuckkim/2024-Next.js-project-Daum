@@ -78,9 +78,11 @@
     }
     .currentMonth {
       font-weight: bold;
+      overflow: auto;
     }
     .diffMonth {
       color: #ddd;
+      overflow: auto;
     }
   }
 }

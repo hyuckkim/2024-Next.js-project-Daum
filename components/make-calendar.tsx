@@ -124,7 +124,6 @@ const MakeCalendar = ({
             <CalendarDay
               day={v}
               today={currentDate}
-              editable={editable}
               onMouseEnter={() => handleMouseEnter(i)}
               onMouseLeave={handleMouseLeave}
               highlighted={showButton === i}

@@ -9,7 +9,6 @@ export const CalendarDay = ({
   day: v,
   today: currentDate,
   index,
-  editable,
   onMouseEnter,
   onMouseLeave,
   highlighted,
@@ -19,7 +18,6 @@ export const CalendarDay = ({
   day: Date;
   today: Date;
   index: number;
-  editable: boolean;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
   highlighted?: boolean;
