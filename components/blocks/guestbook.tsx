@@ -2,7 +2,7 @@
 
 import { BlockSchemaWithBlock } from "@blocknote/core";
 import { ReactSlashMenuItem, createReactBlockSpec } from "@blocknote/react";
-import { Book, BookCopy, BookKey, Trash } from "lucide-react";
+import { Book, BookKey, Trash } from "lucide-react";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
@@ -46,7 +46,8 @@ const Guestbook = ({
   onIdChanged: (id: string) => void,
   preview?: boolean,
 }) => {
-  const book = useQuery(api.guestbooks.get, id === "" ? "skip"
+  const noIdSetted = id === "";
+  const book = useQuery(api.guestbooks.get, noIdSetted ? "skip"
     : {id: id as Id<"guestbooks">});
   const create = useMutation(api.guestbooks.create);
   const addComment = useMutation(api.guestbooks.addComment);
@@ -115,13 +116,8 @@ const Guestbook = ({
 
     }
   }
-  if (book === undefined) {
-    return (
-      <Skeleton className="w-full h-60" />
-    )
-  }
 
-  if (book === null) {
+  if (book === null || noIdSetted) {
     return (
       <div
         className="flex flex-col w-full h-60 rounded-lg border-2 border-dashed text-muted-foreground border-neutral-200 dark:border-neutral-700 justify-center items-center"
@@ -131,6 +127,12 @@ const Guestbook = ({
         <BookKey className="w-8 h-8 mb-2"/>
         Add guestbook
       </div>
+    )
+  }
+
+  if (book === undefined) {
+    return (
+      <Skeleton className="w-full h-60" />
     )
   }
 
