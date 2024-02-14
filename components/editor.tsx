@@ -10,8 +10,12 @@ import {
 import "@blocknote/core/style.css";
 
 import { useEdgeStore } from "@/lib/edgestore";
-import { CheckBoxBlockSpec, insertCheckBoxBlock } from "@/components/blocks/checkbox";
-import { chartBlock, insertChartBlock } from "./blocks/chart";
+import {
+  CheckBoxBlockSpec,
+  insertCheckBoxBlock,
+} from "@/components/blocks/checkbox";
+// import { chartBlock, insertChartBlock } from "./blocks/chart";
+import { insertPieChartBlock, piechartBlock } from "./blocks/PieChart";
 
 interface EditorProps {
   onChange: (value: string) => void;
@@ -42,12 +46,12 @@ const Editor = ({ onChange, initialContent, editable }: EditorProps) => {
     blockSpecs: {
       ...defaultBlockSpecs,
       checkboxListItem: CheckBoxBlockSpec,
-      chart: chartBlock,
+      chart: piechartBlock,
     },
     slashMenuItems: [
       ...getDefaultReactSlashMenuItems(),
-      insertChartBlock,
-      insertCheckBoxBlock
+      insertPieChartBlock,
+      insertCheckBoxBlock,
     ],
   });
 
