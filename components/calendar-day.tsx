@@ -30,8 +30,6 @@ export const CalendarDay = ({
   const validation = getMonth(currentDate) === getMonth(v);
   const today = format(new Date(), "yyyyMMdd") === format(v, "yyyyMMdd");
 
-  //const hasPost = checkedDates.includes(i);
-
   if (validation && isSaturday(v)) {
     style = {
       color: "blue",
@@ -62,10 +60,11 @@ export const CalendarDay = ({
       {content &&
         content.map(
           (v) =>
-            index === v.calendarIndex && (
+            index === v.calendarIndex &&
+            content.length < 3 && (
               <div
                 key={v._id}
-                className="w-80% h-6 hover:bg-gray-400 border-blue-500 border-1 bg-[#DDE5FF] rounded-md flex flex-row justify-center items-center mt-5 mx-5"
+                className="w-80% h-6 hover:bg-gray-400 border-blue-500 border-1 bg-[#DDE5FF] rounded-md flex flex-row justify-center items-center mt-2 mx-5"
               >
                 {v.name}
               </div>
