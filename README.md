@@ -15,7 +15,7 @@
   <img src="https://img.shields.io/badge/tailwindcss-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white">
   <img src="https://img.shields.io/badge/chart.js-FF6384?style=for-the-badge&logo=chartdotjs&logoColor=white">  
   <img src="https://img.shields.io/badge/clerk-6C47FF?style=for-the-badge&logo=clerk&logoColor=white">  
-  <img src="https://img.shields.io/badge/visualstudiocode-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white" alt="icon" /> 
+  <img src="https://img.shields.io/badge/vscode-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white" alt="icon" /> 
 </p>
 
 # 💡 Getting Started
@@ -29,20 +29,21 @@ $ git clone https://github.com/Google-Developer-Student-Clubs-TUK/2024-Next.js-p
 
 #### Run the development server
 
+##### 1. 라이브러리 설치
 ```bash
 npm i
 # or
 npm install
 ```
 
+##### 2. 서버 띄우기
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+
+##### 3. convex 실행
+```bash
+npx convex dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
