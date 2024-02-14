@@ -3,7 +3,7 @@
 import { ElementRef, useRef } from "react";
 import { Doc, Id } from "@/convex/_generated/dataModel"
 import { useTheme } from "next-themes";
-import { MoreHorizontal, Trash, SquareSlash, CheckSquare, Flag, ListChecks } from "lucide-react"
+import { MoreHorizontal, Trash, SquareSlash, CheckSquare, Flag, ListChecks, AlarmCheck } from "lucide-react"
 import { KanbanBoardProps } from "@/hooks/use-kanban-board"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
