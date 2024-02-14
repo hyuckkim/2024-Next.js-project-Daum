@@ -9,6 +9,7 @@ export const CalendarDay = ({
   day: v,
   today: currentDate,
   index,
+  editable,
   onMouseEnter,
   onMouseLeave,
   highlighted,
@@ -18,6 +19,7 @@ export const CalendarDay = ({
   day: Date;
   today: Date;
   index: number;
+  editable: boolean;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
   highlighted?: boolean;
@@ -60,8 +62,7 @@ export const CalendarDay = ({
       {content &&
         content.map(
           (v) =>
-            index === v.calendarIndex &&
-            content.length < 3 && (
+            index === v.calendarIndex && (
               <div
                 key={v._id}
                 className="w-80% h-6 hover:bg-gray-400 border-blue-500 border-1 bg-[#DDE5FF] rounded-md flex flex-row justify-center items-center mt-2 mx-5"
