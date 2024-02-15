@@ -5,7 +5,7 @@ import {
   KanbanBoardDocument,
   KanbanBoardElement,
   generateId,
-  newKanbanBoard
+  createNewKanbanBoard
 } from "@/components/KanbanBoard/kanbanboard.types";
 
 export interface KanbanBoardProps {

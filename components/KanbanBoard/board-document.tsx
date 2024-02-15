@@ -3,7 +3,7 @@
 import { ElementRef, useRef } from "react";
 import { Doc, Id } from "@/convex/_generated/dataModel"
 import { useTheme } from "next-themes";
-import { MoreHorizontal, Trash, SquareSlash, CheckSquare, Flag, ListChecks, AlarmCheck } from "lucide-react"
+import { MoreHorizontal, Trash, SquareSlash, CheckSquare, Flag, ListChecks, AlarmClockCheck } from "lucide-react"
 import { KanbanBoardProps } from "@/hooks/use-kanban-board"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
@@ -28,7 +28,6 @@ export const BoardDocument = ({
   },
   onDragChange,
 }: {
-  _id: string,
   boardDocument: KanbanBoardDocument,
   document: Doc<"documents">,
   editable?: boolean,
@@ -209,7 +208,7 @@ export const BoardDocument = ({
         )}
         {false && (
           <div className="flex">
-            <AlarmCheck className="w-4 h-4 mr-2" />
+            <AlarmClockCheck className="w-4 h-4 mr-2" />
             <div className="text-nowrap overflow-hidden text-ellipsis max-w-20">
               {"in 1234 years"}
             </div>
