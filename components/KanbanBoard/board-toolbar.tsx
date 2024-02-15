@@ -12,23 +12,18 @@ import { api } from "@/convex/_generated/api";
 import { PublishBoard } from "@/app/(main)/_components/KanbanBoard/board-publish";
 import { BoardMiscMenu } from "@/app/(main)/_components/KanbanBoard/board-misc-menu";
 
-
 interface BoardToolbarProps {
   initialData: Doc<"boards">;
   preview?: boolean;
 }
 
-export const BoardToolbar = ({
-  initialData,
-  preview
-}: BoardToolbarProps) => {
+export const BoardToolbar = ({ initialData, preview }: BoardToolbarProps) => {
   const inputRef = useRef<ElementRef<"textarea">>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [value, setValue] = useState(initialData.title);
 
   const update = useMutation(api.boards.update);
   const removeIcon = useMutation(api.boards.removeIcon);
-
 
   const enableInput = () => {
     if (preview) return;
@@ -83,9 +78,7 @@ export const BoardToolbar = ({
               </p>
             </IconPicker>
           ) : (
-            <p className="text-6xl">
-              {initialData.icon}
-            </p>
+            <p className="text-6xl">{initialData.icon}</p>
           )}
           {isEditing && !preview ? (
             <TextareaAutoSize
@@ -140,5 +133,5 @@ export const BoardToolbar = ({
         </div>
       )}
     </div>
-  )
-}
+  );
+};

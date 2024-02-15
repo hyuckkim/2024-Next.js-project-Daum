@@ -1,9 +1,14 @@
+"use client";
+
 import styles from "./Calendar.module.scss";
 
-import { format, getMonth, isSaturday, isSunday } from "date-fns";
+import { format, getMonth, isSaturday, isSunday, set } from "date-fns";
 import { PlusCircle } from "lucide-react";
-import editor from "./editor";
 import { CalendarDocumentElement } from "@/types/calendar";
+import { ElementRef, useRef, useState } from "react";
+import { CalendarDocumentProps } from "@/hooks/use-calendar-document";
+import TextareaAutoSize from "react-textarea-autosize";
+import { Id } from "@/convex/_generated/dataModel";
 
 export const CalendarDay = ({
   day: v,
@@ -13,7 +18,9 @@ export const CalendarDay = ({
   onMouseLeave,
   highlighted,
   addDocument,
+  initialContent,
   content,
+  editor,
 }: {
   day: Date;
   today: Date;
@@ -21,14 +28,34 @@ export const CalendarDay = ({
   onMouseEnter: () => void;
   onMouseLeave: () => void;
   highlighted?: boolean;
-
   addDocument: () => void;
-
+  initialContent?: string;
   content?: CalendarDocumentElement[];
+  editor: CalendarDocumentProps;
 }) => {
+  const inputRef = useRef<ElementRef<"textarea">>(null);
   let style;
   const validation = getMonth(currentDate) === getMonth(v);
   const today = format(new Date(), "yyyyMMdd") === format(v, "yyyyMMdd");
+  const [document, SetDocument] = useState<boolean>(false);
+  const [newValue, newSetValue] = useState<string>("");
+
+  const { onRenameElement } = editor;
+
+  const onInput = (id: string, value: string) => {
+    onRenameElement(id, value);
+  };
+
+  const documentclick = (calendarId: string, calendarName: string) => {
+    newSetValue(calendarName);
+    if (newValue) {
+      content?.map((v) => {
+        if (calendarId === v._id) {
+          onInput(v._id, calendarName);
+        }
+      });
+    }
+  };
 
   if (validation && isSaturday(v)) {
     style = {
@@ -65,7 +92,14 @@ export const CalendarDay = ({
                 key={v._id}
                 className="w-80% h-6 hover:bg-gray-400 border-blue-500 border-1 bg-[#DDE5FF] rounded-md flex flex-row justify-center items-center mt-2 mx-5"
               >
-                {v.name}
+                <TextareaAutoSize
+                  ref={inputRef}
+                  value={v.name}
+                  className="w-full h-full bg-[#DDE5FF] text-center rounded-md"
+                  onChange={(e) => documentclick(v._id, e.target.value)}
+                >
+                  {v.name}
+                </TextareaAutoSize>
               </div>
             )
         )}

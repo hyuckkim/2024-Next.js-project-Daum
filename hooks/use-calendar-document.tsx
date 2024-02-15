@@ -3,9 +3,9 @@ import { Calendar, generateId, newCalendarDocument } from "@/types/calendar";
 import { useEffect, useState } from "react";
 
 export interface CalendarDocumentProps {
-  onNewElement: (index: number) => void;
+  onNewElement: (calendarId: number) => void;
   content: Calendar | undefined;
-
+  onRenameElement: (id: string, name: string) => void;
   onAddDocument: (id: string, calendar: Id<"calendars">) => void;
 }
 
@@ -30,19 +30,23 @@ export const useCalendarDocument = ({
     }
   }, [content, onBoardChanged]);
 
-  const onNewElement = (index: number) => {
+  const onNewElement = (calendarId: number) => {
     if (!content) return;
-    if (index) {
+    if (calendarId) {
       setContent([
         ...content,
         {
           _id: generateId(),
           name: "untitled",
           content: [],
-          calendarIndex: index,
+          calendarIndex: calendarId,
         },
       ]);
     }
+  };
+
+  const onRenameElement = (id: string, name: string) => {
+    setContent(content?.map((a) => (a._id === id ? { ...a, name } : a)));
   };
 
   const onAddDocument = (id: string, calendar: Id<"calendars">) => {
@@ -75,6 +79,7 @@ export const useCalendarDocument = ({
     content,
     onAddDocument,
     onNewElement,
+    onRenameElement,
   };
 };
 

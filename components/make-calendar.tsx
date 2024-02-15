@@ -41,6 +41,7 @@ const MakeCalendar = ({
       onChange(JSON.stringify(calendar, null, 2));
     },
   });
+
   const handleCalendarDocument = (index: number) => {
     setClickedButton(clickedButton === false ? true : clickedButton);
     setShowDocument(index);
@@ -48,6 +49,7 @@ const MakeCalendar = ({
       editor.onNewElement(index);
     }
   };
+
   const handleMouseEnter = (index: number) => {
     setShowButton(index);
   };
@@ -124,11 +126,13 @@ const MakeCalendar = ({
             <CalendarDay
               day={v}
               today={currentDate}
+              initialContent={initialContent}
               onMouseEnter={() => handleMouseEnter(i)}
               onMouseLeave={handleMouseLeave}
               highlighted={showButton === i}
               addDocument={() => handleCalendarDocument(i)}
               index={i}
+              editor={editor}
               content={content}
             />
           );
