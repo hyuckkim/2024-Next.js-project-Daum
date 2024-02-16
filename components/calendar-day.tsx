@@ -3,7 +3,7 @@
 import styles from "./Calendar.module.scss";
 
 import { format, getMonth, isSaturday, isSunday, set } from "date-fns";
-import { MinusCircle, PlusCircle } from "lucide-react";
+import { Trash2, PlusCircle } from "lucide-react";
 import { CalendarDocumentElement } from "@/types/calendar";
 import { ElementRef, useRef, useState } from "react";
 import { CalendarDocumentProps } from "@/hooks/use-calendar-document";
@@ -109,8 +109,8 @@ export const CalendarDay = ({
                 >
                   {v.name}
                 </TextareaAutoSize>
-                <MinusCircle
-                  className="cursor-pointer"
+                <Trash2
+                  className="w-5 h-5 cursor-pointer"
                   onClick={() => documentDeleteclick(v._id)}
                 />
               </div>
