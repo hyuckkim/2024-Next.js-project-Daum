@@ -32,8 +32,8 @@ const MakeCalendar = ({
 }: CalendarProps) => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [showButton, setShowButton] = useState<number>();
-  const [showDocument, setShowDocument] = useState<number>();
   const [clickedButton, setClickedButton] = useState<boolean>(false);
+
   //const createCalendarDocument = useMutation(api.calendars.update);
   const editor = useCalendarDocument({
     initialContent: initialContent ? JSON.parse(initialContent) : undefined,
@@ -44,7 +44,6 @@ const MakeCalendar = ({
 
   const handleCalendarDocument = (index: number) => {
     setClickedButton(clickedButton === false ? true : clickedButton);
-    setShowDocument(index);
     if (clickedButton) {
       editor.onNewElement(index);
     }

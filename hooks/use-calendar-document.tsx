@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 export interface CalendarDocumentProps {
   onNewElement: (calendarId: number) => void;
+  onDeleteElement: (calendarDocId: string) => void;
   content: Calendar | undefined;
   onRenameElement: (id: string, name: string) => void;
   onAddDocument: (id: string, calendar: Id<"calendars">) => void;
@@ -45,6 +46,13 @@ export const useCalendarDocument = ({
     }
   };
 
+  const onDeleteElement = (calendarDocId: string) => {
+    if (!content) return;
+    if (calendarDocId) {
+      setContent(content?.filter((v) => v._id !== calendarDocId));
+    }
+  };
+
   const onRenameElement = (id: string, name: string) => {
     setContent(content?.map((a) => (a._id === id ? { ...a, name } : a)));
   };
@@ -80,6 +88,7 @@ export const useCalendarDocument = ({
     onAddDocument,
     onNewElement,
     onRenameElement,
+    onDeleteElement,
   };
 };
 

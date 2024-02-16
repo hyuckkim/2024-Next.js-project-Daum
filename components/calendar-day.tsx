@@ -3,7 +3,7 @@
 import styles from "./Calendar.module.scss";
 
 import { format, getMonth, isSaturday, isSunday, set } from "date-fns";
-import { PlusCircle } from "lucide-react";
+import { MinusCircle, PlusCircle } from "lucide-react";
 import { CalendarDocumentElement } from "@/types/calendar";
 import { ElementRef, useRef, useState } from "react";
 import { CalendarDocumentProps } from "@/hooks/use-calendar-document";
@@ -37,10 +37,9 @@ export const CalendarDay = ({
   let style;
   const validation = getMonth(currentDate) === getMonth(v);
   const today = format(new Date(), "yyyyMMdd") === format(v, "yyyyMMdd");
-  const [document, SetDocument] = useState<boolean>(false);
   const [newValue, newSetValue] = useState<string>("");
 
-  const { onRenameElement } = editor;
+  const { onRenameElement, onDeleteElement } = editor;
 
   const onInput = (id: string, value: string) => {
     onRenameElement(id, value);
@@ -55,6 +54,14 @@ export const CalendarDay = ({
         }
       });
     }
+  };
+
+  const documentDeleteclick = (calendarDocId: string) => {
+    content?.map((v) => {
+      if (calendarDocId === v._id) {
+        onDeleteElement(calendarDocId);
+      }
+    });
   };
 
   if (validation && isSaturday(v)) {
@@ -78,10 +85,12 @@ export const CalendarDay = ({
         <span className={styles.day}>{format(v, "d")}</span>
         {today && <span className={styles.today}>(오늘)</span>}
         {highlighted && (
-          <PlusCircle
-            className="w-4 h-4 cursor-pointer"
-            onClick={addDocument}
-          />
+          <div className="flex flex-row justify-end">
+            <PlusCircle
+              className="w-4 h-4 cursor-pointer"
+              onClick={addDocument}
+            />
+          </div>
         )}
       </div>
       {content &&
@@ -100,6 +109,10 @@ export const CalendarDay = ({
                 >
                   {v.name}
                 </TextareaAutoSize>
+                <MinusCircle
+                  className="cursor-pointer"
+                  onClick={() => documentDeleteclick(v._id)}
+                />
               </div>
             )
         )}
