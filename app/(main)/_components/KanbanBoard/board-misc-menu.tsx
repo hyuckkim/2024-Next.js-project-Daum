@@ -32,7 +32,7 @@ export const BoardMiscMenu = ({ documentId }: MenuProps) => {
   const { user } = useUser();
 
   const board = useQuery(api.boards.getById, { boardId: documentId });
-  const calendar = useQuery(api.calendars.getById, (!!(board?.connectedCalendar)) ? { newCalendar: board?.connectedCalendar } : "skip");
+  const calendar = useQuery(api.calendars.getById, (!!(board?.connectedCalendar)) ? { calendarId: board?.connectedCalendar } : "skip");
 
   const calendars = useQuery(api.calendars.getSidebar);
   const connectCalendar = useMutation(api.boards.connectCalendar);
@@ -74,7 +74,7 @@ export const BoardMiscMenu = ({ documentId }: MenuProps) => {
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
                 <DropdownMenuItem asChild>
-                  <Link href={'/calendars'}>
+                  <Link href={`/calendars/${calendar._id}`}>
                     <Eye className="h-4 w-4 mr-2" />
                     See
                   </Link>
