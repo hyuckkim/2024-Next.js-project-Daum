@@ -23,13 +23,8 @@ import { useCalendarDocument } from "@/hooks/use-calendar-document";
 interface CalendarProps {
   initialContent?: string;
   onChange: (value: string) => void;
-  editable: boolean;
 }
-const MakeCalendar = ({
-  initialContent,
-  onChange,
-  editable,
-}: CalendarProps) => {
+const MakeCalendar = ({ initialContent, onChange }: CalendarProps) => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [showButton, setShowButton] = useState<number>();
   const [clickedButton, setClickedButton] = useState<boolean>(false);
@@ -45,16 +40,18 @@ const MakeCalendar = ({
   const handleCalendarDocument = (index: number) => {
     setClickedButton(clickedButton === false ? true : clickedButton);
     if (clickedButton) {
-      editor.onNewElement(index);
+      editor.onNewElement(index, getMonth(currentDate) + 1);
     }
   };
 
   const handleMouseEnter = (index: number) => {
     setShowButton(index);
   };
+
   const handleMouseLeave = () => {
     setShowButton(undefined);
   };
+
   const monthStart = startOfMonth(currentDate);
   const monthEnd = endOfMonth(currentDate);
   const startDate = startOfWeek(monthStart);
@@ -77,6 +74,7 @@ const MakeCalendar = ({
   const prevMonthHandler = useCallback(() => {
     setCurrentDate(subMonths(currentDate, 1));
   }, [currentDate]);
+
   const createMonth = useMemo(() => {
     const monthArray = [];
     let day = startDate;

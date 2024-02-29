@@ -53,13 +53,7 @@ const CalendarIdPage = ({ params }: CalendarIdPageProps) => {
     return <div>Not found</div>;
   }
 
-  return (
-    <MakeCalendar
-      initialContent={calendar.content}
-      editable={true}
-      onChange={onUpdate}
-    />
-  );
+  return <MakeCalendar initialContent={calendar.content} onChange={onUpdate} />;
 };
 
 export default CalendarIdPage;
