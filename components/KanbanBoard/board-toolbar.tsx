@@ -15,9 +15,10 @@ import { BoardMiscMenu } from "@/app/(main)/_components/KanbanBoard/board-misc-m
 interface BoardToolbarProps {
   initialData: Doc<"boards">;
   preview?: boolean;
+  calendar?: Doc<"calendars">;
 }
 
-export const BoardToolbar = ({ initialData, preview }: BoardToolbarProps) => {
+export const BoardToolbar = ({ initialData, preview, calendar }: BoardToolbarProps) => {
   const inputRef = useRef<ElementRef<"textarea">>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [value, setValue] = useState(initialData.title);
@@ -129,7 +130,7 @@ export const BoardToolbar = ({ initialData, preview }: BoardToolbarProps) => {
       {!preview && (
         <div className="flex gap-x-2 m-2">
           <PublishBoard initialData={initialData} />
-          <BoardMiscMenu documentId={initialData._id} />
+          <BoardMiscMenu documentId={initialData._id} calendar={calendar}/>
         </div>
       )}
     </div>

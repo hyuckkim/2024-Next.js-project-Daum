@@ -6,7 +6,7 @@ import { useMutation, useQuery } from "convex/react";
 import { toast } from "sonner";
 import { Calendar, Eye, MoreHorizontal, Trash, Unlink } from "lucide-react";
 
-import { Id } from "@/convex/_generated/dataModel";
+import { Doc, Id } from "@/convex/_generated/dataModel";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -25,14 +25,14 @@ import Link from "next/link";
 
 interface MenuProps {
   documentId: Id<"boards">;
+  calendar?: Doc<"calendars">;
 }
 
-export const BoardMiscMenu = ({ documentId }: MenuProps) => {
+export const BoardMiscMenu = ({ documentId, calendar }: MenuProps) => {
   const router = useRouter();
   const { user } = useUser();
 
   const board = useQuery(api.boards.getById, { boardId: documentId });
-  const calendar = useQuery(api.calendars.getById, (!!(board?.connectedCalendar)) ? { calendarId: board?.connectedCalendar } : "skip");
 
   const calendars = useQuery(api.calendars.getSidebar);
   const connectCalendar = useMutation(api.boards.connectCalendar);

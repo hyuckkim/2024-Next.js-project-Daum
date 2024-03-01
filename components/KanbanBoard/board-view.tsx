@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useKanbanBoard } from "@/hooks/use-kanban-board";
 import { PlusCircle } from "lucide-react";
 
@@ -8,15 +8,20 @@ import { BoardElement } from "./board-element";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { ArrayDragSpace } from "../array-drag-space";
+import { cn } from "@/lib/utils";
+import { Doc, Id } from "@/convex/_generated/dataModel";
+import { Calendar, parseDateByIndex } from "@/types/calendar";
 
 const BoardView = ({
   onChange,
   initialContent,
   editable,
+  connectedCalendar,
 }: {
   onChange?: (value: string) => void,
   initialContent?: string,
-  editable?: boolean
+  connectedCalendar?: Doc<"calendars">,
+  editable?: boolean,
 }) => {
   const documents = useQuery(api.documents.getSearch, {});
   const [dragSelected, setDragSelected] = useState<number | undefined>(undefined);
@@ -27,6 +32,23 @@ const BoardView = ({
       onChange?.(JSON.stringify(board, null, 2));
     }
   });
+
+  const [orientedData, setOrientedData] = useState<{[document: Id<"documents">]: Date}>({});
+  useEffect(() => {
+    const newData: {[document: Id<"documents">]: Date} = {};
+    if (connectedCalendar?.content) {
+      const calendarData: Calendar = JSON.parse(connectedCalendar.content);
+      calendarData.forEach(e => {
+        const parsedDate = parseDateByIndex(e.calendarMonth, e.calendarIndex);
+        e.content.forEach(d => {
+          if (false) { // Todo: calendarDocument가 문서를 포함하고 있다면! (아래에 있는 as 문법도 수정하기)
+            newData[(d as unknown as {doc: Id<"documents">}).doc] = parsedDate;
+          }
+        });
+      });
+      setOrientedData(newData);
+    }
+  }, [connectedCalendar]);
 
   const onDragOver = (e: React.DragEvent) => {
     if (e.dataTransfer.types[0] === "elementid") {
@@ -94,6 +116,7 @@ const BoardView = ({
             editable={editable}
             documents={documents}
             onDragChange={(e) => onElementDragOver(e, i)}
+            calendarData={orientedData}
           />
         ))}
       </ArrayDragSpace>

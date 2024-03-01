@@ -12,6 +12,7 @@ import { KanbanBoardDocument } from "@/components/KanbanBoard/kanbanboard.types"
 import { BoardDocumentTitle } from "@/components/KanbanBoard/board-document-title";
 import { toast } from "sonner";
 import { BoardColorPicker } from "@/app/(main)/_components/KanbanBoard/board-color-picker";
+import { formatDistance } from "date-fns";
 
 export const BoardDocument = ({
   boardDocument: {
@@ -27,12 +28,14 @@ export const BoardDocument = ({
     onDocumentSetAttribute,
   },
   onDragChange,
+  date,
 }: {
   boardDocument: KanbanBoardDocument
   document: Doc<"documents">,
   editable?: boolean,
   editor: KanbanBoardProps,
   onDragChange?: (status: ("before" | "after" | "none")) => void,
+  date?: Date,
 }) => {
   const { resolvedTheme } = useTheme();
   const rootRef = useRef<ElementRef<"div">>(null);
@@ -206,11 +209,11 @@ export const BoardDocument = ({
             </div>
           </div>
         )}
-        {false && (
+        {date && (
           <div className="flex">
             <AlarmClockCheck className="w-4 h-4 mr-2" />
             <div className="text-nowrap overflow-hidden text-ellipsis max-w-20">
-              {"in 1234 years"}
+              {formatDistance(new Date(), date)}
             </div>
           </div>
         )}

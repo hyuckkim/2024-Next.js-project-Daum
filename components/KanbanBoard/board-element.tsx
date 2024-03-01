@@ -31,12 +31,14 @@ export const BoardElement = ({
   editable,
   documents,
   onDragChange,
+  calendarData,
 }: {
   editor: KanbanBoardProps,
   element: KanbanBoardElement,
   editable?: boolean,
   documents?: Doc<"documents">[] | undefined,
   onDragChange?: (status: ("before" | "after" | "none")) => void,
+  calendarData?: {[document: Id<"documents">]: Date},
 }) => {
   const { resolvedTheme } = useTheme();
   const rootRef = useRef<ElementRef<"div">>(null);
@@ -284,6 +286,7 @@ export const BoardElement = ({
               editable={editable}
               editor={editor}
               onDragChange={(status) => onDocumentDragOver(status, i)}
+              date={calendarData?.[document.board._id]}
             />
           ))}
         </ArrayDragSpace>
