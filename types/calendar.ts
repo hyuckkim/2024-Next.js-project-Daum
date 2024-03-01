@@ -7,8 +7,10 @@ export type CalendarDocumentElement = {
   name: string;
   content: CalendarDocument[];
   calendarIndex: number;
+  calendarMonth: number;
 };
 
+//calendar에 들어갈 내용
 export type CalendarDocument = {
   _id: string;
   name?: string;
@@ -17,11 +19,15 @@ export type CalendarDocument = {
 
 export const newCalendarDocument = (...names: string[]): Calendar => {
   return names.map((v) => {
+    const currentDate = new Date();
+    const formattedDate = `${currentDate.getMonth() + 2}`;
+
     return {
       _id: generateId(),
       name: v,
       content: [],
       calendarIndex: +v,
+      calendarMonth: +formattedDate,
     };
   });
 };

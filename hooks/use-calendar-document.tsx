@@ -3,7 +3,8 @@ import { Calendar, generateId, newCalendarDocument } from "@/types/calendar";
 import { useEffect, useState } from "react";
 
 export interface CalendarDocumentProps {
-  onNewElement: (calendarId: number) => void;
+  onNewElement: (calendarId: number, calendarMonth: number) => void;
+  onDeleteElement: (calendarDocId: string) => void;
   content: Calendar | undefined;
   onRenameElement: (id: string, name: string) => void;
   onAddDocument: (id: string, calendar: Id<"calendars">) => void;
@@ -30,7 +31,7 @@ export const useCalendarDocument = ({
     }
   }, [content, onBoardChanged]);
 
-  const onNewElement = (calendarId: number) => {
+  const onNewElement = (calendarId: number, calendarMonth: number) => {
     if (!content) return;
     if (calendarId) {
       setContent([
@@ -40,9 +41,14 @@ export const useCalendarDocument = ({
           name: "untitled",
           content: [],
           calendarIndex: calendarId,
+          calendarMonth: calendarMonth,
         },
       ]);
     }
+  };
+
+  const onDeleteElement = (calendarDocId: string) => {
+    setContent(content?.filter((a) => a._id !== calendarDocId));
   };
 
   const onRenameElement = (id: string, name: string) => {
@@ -80,6 +86,7 @@ export const useCalendarDocument = ({
     onAddDocument,
     onNewElement,
     onRenameElement,
+    onDeleteElement,
   };
 };
 

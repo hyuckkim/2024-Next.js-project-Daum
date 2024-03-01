@@ -3,7 +3,7 @@
 import styles from "./Calendar.module.scss";
 
 import { format, getMonth, isSaturday, isSunday, set } from "date-fns";
-import { PlusCircle } from "lucide-react";
+import { Trash2, PlusCircle } from "lucide-react";
 import { CalendarDocumentElement } from "@/types/calendar";
 import { ElementRef, useRef, useState } from "react";
 import { CalendarDocumentProps } from "@/hooks/use-calendar-document";
@@ -18,7 +18,6 @@ export const CalendarDay = ({
   onMouseLeave,
   highlighted,
   addDocument,
-  initialContent,
   content,
   editor,
 }: {
@@ -37,24 +36,54 @@ export const CalendarDay = ({
   let style;
   const validation = getMonth(currentDate) === getMonth(v);
   const today = format(new Date(), "yyyyMMdd") === format(v, "yyyyMMdd");
-  const [document, SetDocument] = useState<boolean>(false);
-  const [newValue, newSetValue] = useState<string>("");
+  //const [newValue, newSetValue] = useState<string>("");
+  const [isEditing, setEditing] = useState<boolean>(false);
 
-  const { onRenameElement } = editor;
+  const enableInput = () => {
+    setEditing(true);
+    if (isEditing) {
+      inputRef.current?.focus();
+    }
+  };
+
+  const disableInput = () => {
+    setEditing(false);
+    if (isEditing === false) {
+      inputRef.current?.blur();
+    }
+  };
+
+  const { onRenameElement, onDeleteElement } = editor;
 
   const onInput = (id: string, value: string) => {
-    onRenameElement(id, value);
+    setEditing(true);
+    if (isEditing) {
+      onRenameElement(id, value);
+    }
+  };
+
+  const onKeyPress = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      //blur() 처리해주기
+      disableInput();
+    }
   };
 
   const documentclick = (calendarId: string, calendarName: string) => {
-    newSetValue(calendarName);
-    if (newValue) {
-      content?.map((v) => {
-        if (calendarId === v._id) {
-          onInput(v._id, calendarName);
-        }
-      });
-    }
+    content?.map((v) => {
+      if (calendarId === v._id) {
+        onInput(v._id, calendarName);
+      }
+    });
+  };
+
+  const documentDeleteclick = (calendarDocId: string) => {
+    content?.map((v) => {
+      if (calendarDocId === v._id) {
+        onDeleteElement(calendarDocId);
+      }
+    });
   };
 
   if (validation && isSaturday(v)) {
@@ -78,28 +107,44 @@ export const CalendarDay = ({
         <span className={styles.day}>{format(v, "d")}</span>
         {today && <span className={styles.today}>(오늘)</span>}
         {highlighted && (
-          <PlusCircle
-            className="w-4 h-4 cursor-pointer"
-            onClick={addDocument}
-          />
+          <div className="flex flex-row justify-end">
+            <PlusCircle
+              className="w-4 h-4 cursor-pointer"
+              onClick={addDocument}
+            />
+          </div>
         )}
       </div>
       {content &&
         content.map(
           (v) =>
-            index === v.calendarIndex && (
+            index === v.calendarIndex &&
+            v.calendarMonth === Number(format(currentDate, "M")) && (
               <div
                 key={v._id}
                 className="w-80% h-6 hover:bg-gray-400 border-blue-500 border-1 bg-[#DDE5FF] rounded-md flex flex-row justify-center items-center mt-2 mx-5"
               >
                 <TextareaAutoSize
                   ref={inputRef}
+                  onClick={() => {
+                    enableInput();
+                  }}
+                  onBlur={() => {
+                    disableInput();
+                  }}
                   value={v.name}
+                  onKeyDown={(e) => {
+                    onKeyPress(e);
+                  }}
                   className="w-full h-full bg-[#DDE5FF] text-center rounded-md"
                   onChange={(e) => documentclick(v._id, e.target.value)}
                 >
                   {v.name}
                 </TextareaAutoSize>
+                <Trash2
+                  className="w-5 h-full cursor-pointer"
+                  onClick={() => documentDeleteclick(v._id)}
+                />
               </div>
             )
         )}
