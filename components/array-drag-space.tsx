@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import React from "react";
 
 export const ArrayDragSpace = ({
   children,
@@ -35,10 +36,10 @@ export const ArrayDragSpace = ({
   if (!children) return null;
 
   return (<>
-    {children.map((v, i) => (<>
+    {children.map((v, i) => (<React.Fragment key={i}>
         <Space onDragOver={(e) => onDragToIndex?.(e, i)} enabled={index === i} />
         {v}
-    </>)
+    </React.Fragment>)
     )}
     <Space onDragOver={(e) => onDragToLast?.(e)} enabled={index === children.length} />
   </>)
