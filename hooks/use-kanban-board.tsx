@@ -1,5 +1,5 @@
 import { Id } from "@/convex/_generated/dataModel";
-import { KanbanBoard, generateId, newKanbanBoard } from "@/types/kanbanboard"
+import { KanbanBoard, generateId, createNewKanbanBoard } from "@/types/kanbanboard"
 import { useEffect, useState } from "react"
 
 export interface KanbanBoardProps {
@@ -26,21 +26,16 @@ export const useKanbanBoard = ({
   const [content, setContent] = useState(initialContent);
 
   useEffect(() => {
-    if (!content) {
-      setContent(newKanbanBoard());
-    }
-  }, [content]);
-
-  useEffect(() => {
     if (!!content) {
       onBoardChanged(content);
     }
   }, [content, onBoardChanged]);
 
   const onNewElement = () => {
-    if (!content) return;
+    const oldContent = content ?? createNewKanbanBoard();
+
     setContent([
-      ...content,
+      ...oldContent,
       {
         _id: generateId(),
         name: "untitled",
