@@ -30,7 +30,7 @@ export const BoardDocument = ({
   onDragChange,
   date,
 }: {
-  boardDocument: KanbanBoardDocument
+  boardDocument: KanbanBoardDocument,
   document: Doc<"documents">,
   editable?: boolean,
   editor: KanbanBoardProps,

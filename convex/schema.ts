@@ -32,4 +32,16 @@ export default defineSchema({
     isPublished: v.boolean(),
     connectedCalendar: v.optional(v.id("calendars")),
   }).index("by_user", ["userId"]),
+
+  guestbooks: defineTable({
+    comments: v.array(v.object({
+      name: v.string(),
+      password: v.string(),
+      content: v.string(),
+
+      time: v.string(),
+      id: v.string(),
+    })),
+    userId: v.string(),
+  }),
 });
