@@ -7,7 +7,7 @@ import { PlusCircle } from "lucide-react";
 import { BoardElement } from "./board-element";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import { cn } from "@/lib/utils";
+import { ArrayDragSpace } from "../array-drag-space";
 
 const BoardView = ({
   onChange,
@@ -80,34 +80,24 @@ const BoardView = ({
       onDragOver={onDragOver}
       onDrop={onDrop}
     >
-      {editor.content && editor.content.map((v, i) => (
-        <React.Fragment
-          key={v._id}
-        >
-          <div 
-            className={cn(
-              "h-84 w-2 rounded-md shrink-0",
-              dragSelected === i && "bg-blue-400/75"
-            )}
-            onDragOver={(e) => onElementIndexDragOver(e, i)}
-          />
+      <ArrayDragSpace
+        index={dragSelected ?? -1}
+        direction="x"
+        onDragToIndex={(e, i) => onElementIndexDragOver(e, i)}
+        onDragToLast={(e) => onElementIndexDragOver(e, editor?.content?.length ?? 0)}
+      >
+        {editor.content && editor.content.map((v, i) => (
           <BoardElement
+            key={v._id}
             element={v}
             editor={editor}
             editable={editable}
             documents={documents}
             onDragChange={(e) => onElementDragOver(e, i)}
           />
-        </React.Fragment>
-      ))}
-      <div 
-        className={cn(
-          "h-84 w-2 rounded-md shrink-0",
-          dragSelected === editor?.content?.length && "bg-blue-400/75",
-          !(editor?.content?.length) && "hidden",
-        )}
-        onDragOver={(e) => onElementIndexDragOver(e, editor?.content?.length ?? 0)}
-      />
+        ))}
+      </ArrayDragSpace>
+      
       {editable && (
         <div
           className="flex flex-col h-min w-64 p-2 rounded-md border-2 border-dashed text-muted-foreground border-neutral-200 dark:border-neutral-700 justify-center items-center shrink-[3]"

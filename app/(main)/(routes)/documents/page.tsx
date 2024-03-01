@@ -16,7 +16,7 @@ const DocumentsPage = () => {
   const create = useMutation(api.documents.create);
 
   const onCreate = () => {
-    const promise = create({ title: "Untitle" }).then((documentId) =>
+    const promise = create({ title: "Untitled" }).then((documentId) =>
       router.push(`/documents/${documentId}`)
     );
 
@@ -29,7 +29,6 @@ const DocumentsPage = () => {
 
   return (
     <div className="h-full flex flex-col items-center justify-center space-y-4">
-      This is a protected DocumentsPage
       <Image
         src="/empty.png"
         height="300"
@@ -45,7 +44,7 @@ const DocumentsPage = () => {
         className="hidden dark:block"
       />
       <h2 className="text-lg font-medium">
-        Welcome to {user?.firstName}&apos;s tution
+        Welcome to {user?.firstName}&apos;s daum
       </h2>
       <Button onClick={onCreate}>
         <PlusCircle className="h-4 w-4 mr-2" />

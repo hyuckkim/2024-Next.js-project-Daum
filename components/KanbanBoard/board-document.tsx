@@ -1,21 +1,19 @@
 "use client";
 
-import { Doc, Id } from "@/convex/_generated/dataModel"
-import { Skeleton } from "../ui/skeleton"
-import { File, MoreHorizontal, Trash, SquareSlash, CheckSquare, Flag, TextIcon, ListChecks, AlarmCheck } from "lucide-react"
-import Link from "next/link"
-import { KanbanBoardProps } from "@/hooks/use-kanban-board"
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { Button } from "../ui/button";
-import { cn } from "@/lib/utils";
-import { useTheme } from "next-themes";
-import { KanbanBoardDocument } from "@/types/kanbanboard";
 import { ElementRef, useRef } from "react";
+import { Doc, Id } from "@/convex/_generated/dataModel"
+import { useTheme } from "next-themes";
+import { MoreHorizontal, Trash, SquareSlash, CheckSquare, Flag, ListChecks, AlarmClockCheck } from "lucide-react"
+import { KanbanBoardProps } from "@/hooks/use-kanban-board"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { KanbanBoardDocument } from "@/components/KanbanBoard/kanbanboard.types";
+import { BoardDocumentTitle } from "@/components/KanbanBoard/board-document-title";
 import { toast } from "sonner";
-import { BoardDocumentTitle } from "./board-document-title";
+import { BoardColorPicker } from "@/app/(main)/_components/KanbanBoard/board-color-picker";
 
 export const BoardDocument = ({
-  _id,
   boardDocument: {
     _id: id,
     color,
@@ -30,8 +28,7 @@ export const BoardDocument = ({
   },
   onDragChange,
 }: {
-  _id: string,
-  boardDocument: KanbanBoardDocument,
+  boardDocument: KanbanBoardDocument
   document: Doc<"documents">,
   editable?: boolean,
   editor: KanbanBoardProps,
@@ -54,6 +51,7 @@ export const BoardDocument = ({
   ];
 
   const colors = [
+    undefined,
     { light: "#fecaca", dark: "#b91c1c" },
     { light: "#fed7aa", dark: "#c2410c" },
     { light: "#fef08a", dark: "#a16207" },
@@ -149,42 +147,30 @@ export const BoardDocument = ({
                   Delete
                 </Button>
               </div>
-              <div className="p-1 flex justify-around">
-                <SquareSlash
-                  className="h-4 w-4"
-                  role="button"
-                  onClick={() => onDocumentSetAttribute(document._id, {color: undefined})}
-                />
-                {colors.map(c => (
-                  <div
-                    key={c.light}
-                    role="button"
-                    className={cn(
-                      "h-4 w-4 rounded-sm",
-                      color?.light === c.light && "border-2 border-neutral-500 dark:border-neutral-400"
-                    )}
-                    style={{
-                      backgroundColor: resolvedTheme === "dark" ? c.dark : c.light
-                    }}
-                    onClick={() => onDocumentSetAttribute(document._id, {color: c})}
-                  />
-                ))}
-              </div>
+              <BoardColorPicker
+                colors={colors}
+                currentColor={color}
+                onChangeColor={(c) => onDocumentSetAttribute(document._id, {color: c})}
+              />
               <div className="p-1 flex">
-                {priorityColors.map((c, i) => (
-                  <div
-                    key={c}
-                    title={`priority: ${i + 1}`}
-                  >
-                    <Flag 
-                      className="w-5 h-5 p-0.5"
-                      color={c}
-                      strokeWidth={(priority === i + 1) ? 4 : 2.5}
-                      role="button"
-                      onClick={() => onDocumentSetAttribute(document._id, {priority: i + 1})}
-                    />
-                  </div>
-                ))
+                {priorityColors.map((c, i) => {
+                  const is123 = (p: number): p is 1 | 2 | 3 => p === 1 || p === 2 || p === 3;
+                  const period = i + 1;
+                  return (
+                    <div
+                      key={c}
+                      title={`priority: ${period}`}
+                    >
+                      <Flag 
+                        className="w-5 h-5 p-0.5"
+                        color={c}
+                        strokeWidth={(priority === period) ? 4 : 2.5}
+                        role="button"
+                        onClick={() => onDocumentSetAttribute(document._id, {priority: is123(period) ? period : undefined})}
+                      />
+                    </div>
+                  )
+                })
                 }
                 <Flag 
                   className="w-5 h-5 p-0.5"
@@ -222,7 +208,7 @@ export const BoardDocument = ({
         )}
         {false && (
           <div className="flex">
-            <AlarmCheck className="w-4 h-4 mr-2" />
+            <AlarmClockCheck className="w-4 h-4 mr-2" />
             <div className="text-nowrap overflow-hidden text-ellipsis max-w-20">
               {"in 1234 years"}
             </div>
