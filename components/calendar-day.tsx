@@ -39,35 +39,16 @@ export const CalendarDay = ({
   //const [newValue, newSetValue] = useState<string>("");
   const [isEditing, setEditing] = useState<boolean>(false);
 
-  const enableInput = () => {
-    setEditing(true);
-    if (isEditing) {
-      inputRef.current?.focus();
-    }
-  };
-
-  const disableInput = () => {
-    setEditing(false);
-    if (isEditing === false) {
-      inputRef.current?.blur();
-    }
-  };
-
   const { onRenameElement, onDeleteElement } = editor;
 
   const onInput = (id: string, value: string) => {
-    setEditing(true);
-    if (isEditing) {
-      onRenameElement(id, value);
-    }
+    onRenameElement(id, value);
   };
 
-  const onKeyPress = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      //blur() 처리해주기
-      disableInput();
-    }
+  const disableInput = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    const target = e.target as HTMLTextAreaElement;
+    target.blur();
+    setEditing(false);
   };
 
   const documentclick = (calendarId: string, calendarName: string) => {
@@ -81,7 +62,7 @@ export const CalendarDay = ({
   const documentDeleteclick = (calendarDocId: string) => {
     content?.map((v) => {
       if (calendarDocId === v._id) {
-        onDeleteElement(calendarDocId);
+        onDeleteElement(v._id);
       }
     });
   };
@@ -125,16 +106,22 @@ export const CalendarDay = ({
                 className="w-80% h-6 hover:bg-gray-400 border-blue-500 border-1 bg-[#DDE5FF] rounded-md flex flex-row justify-center items-center mt-2 mx-5"
               >
                 <TextareaAutoSize
-                  ref={inputRef}
-                  onClick={() => {
-                    enableInput();
+                  onClick={(e) => {
+                    setEditing(true);
+                    if (isEditing) {
+                      e.currentTarget.focus();
+                    }
                   }}
-                  onBlur={() => {
-                    disableInput();
+                  onBlur={(e) => {
+                    setEditing(false);
+                    e.target?.blur();
                   }}
                   value={v.name}
                   onKeyDown={(e) => {
-                    onKeyPress(e);
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      disableInput(e);
+                    }
                   }}
                   className="w-full h-full bg-[#DDE5FF] text-center rounded-md"
                   onChange={(e) => documentclick(v._id, e.target.value)}
