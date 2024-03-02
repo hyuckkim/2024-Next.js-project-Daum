@@ -69,6 +69,33 @@ export const Toolbar = ({ initialData, preview }: ToolbarProps) => {
     });
   };
 
+  const contentSummary = async () => {
+    if(!!initialData.content) {
+      const contentString = JSON.parse(initialData.content).reduce(
+        (acc1: string, cur1: any) =>
+          (acc1 +=
+            cur1.content.reduce(
+              (acc2: string, cur2: any) => (acc2 += cur2.text),
+              ''
+            ) + '\n'),
+        ''
+      );
+
+      let url = new URL('http://localhost:3000/api/openai');
+      let param = { content: contentString };
+      url.search = new URLSearchParams(param).toString();
+
+      const summaryResponse = await fetch(url);
+      const summaryJson = await summaryResponse.json();
+      const summary = summaryJson.result;
+
+      update({
+        id: initialData._id,
+        summary,
+      });
+    }
+  }
+
   return (
     <div className="pl-[54px] group relative">
       {!!initialData.icon && !preview && (
@@ -116,6 +143,17 @@ export const Toolbar = ({ initialData, preview }: ToolbarProps) => {
             Add cover
           </Button>
         )}
+        {!initialData.coverImage && !preview && (
+          <Button
+            onClick={contentSummary}
+            className="text-muted-foreground text-xs"
+            variant="outline"
+            size="sm"
+          >
+            <ImageIcon className="h-4 w-4 mr-2" />
+            AI summary
+          </Button>
+        )}
       </div>
       {isEditing && !preview ? (
         <TextareaAutosize
@@ -134,6 +172,11 @@ export const Toolbar = ({ initialData, preview }: ToolbarProps) => {
           {initialData.title}
         </div>
       )}
+      <div>
+        <span>{initialData.summary}</span>
+        <br></br>
+        <br></br>
+      </div>
     </div>
   );
 };
