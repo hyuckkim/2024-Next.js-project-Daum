@@ -1,8 +1,7 @@
 "use client";
-
 import styles from "./Calendar.module.scss";
 import { ChevronRightIcon, ChevronLeftIcon } from "@radix-ui/react-icons";
-import { useCallback, useMemo, useState } from "react";
+import { use, useCallback, useMemo, useState } from "react";
 import {
   format,
   addMonths,
@@ -17,13 +16,33 @@ import {
   isSaturday,
   isSunday,
 } from "date-fns";
-import { date } from "zod";
-import { PlusCircle } from "lucide-react";
 
-const MakeCalendar = () => {
+import { CalendarDay } from "./calendar-day";
+import { useCalendarDocument } from "@/hooks/use-calendar-document";
+
+interface CalendarProps {
+  initialContent?: string;
+  onChange: (value: string) => void;
+}
+const MakeCalendar = ({ initialContent, onChange }: CalendarProps) => {
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [checkedDates, setCheckedDates] = useState<number[]>([]);
   const [showButton, setShowButton] = useState<number>();
+  const [clickedButton, setClickedButton] = useState<boolean>(false);
+
+  //const createCalendarDocument = useMutation(api.calendars.update);
+  const editor = useCalendarDocument({
+    initialContent: initialContent ? JSON.parse(initialContent) : undefined,
+    onBoardChanged: (calendar) => {
+      onChange(JSON.stringify(calendar, null, 2));
+    },
+  });
+
+  const handleCalendarDocument = (index: number) => {
+    setClickedButton(clickedButton === false ? true : clickedButton);
+    if (clickedButton) {
+      editor.onNewElement(index, getMonth(currentDate) + 1);
+    }
+  };
 
   const handleMouseEnter = (index: number) => {
     setShowButton(index);
@@ -37,23 +56,20 @@ const MakeCalendar = () => {
   const monthEnd = endOfMonth(currentDate);
   const startDate = startOfWeek(monthStart);
   const endDate = endOfWeek(monthEnd);
-  const weekMock = ["일", "월", "화", "수", "목", "금", "토"];
+  //const weekMock = ["일", "월", "화", "수", "목", "금", "토"];
 
+  const [weekMock, setWeekMock] = useState([
+    "일",
+    "월",
+    "화",
+    "수",
+    "목",
+    "금",
+    "토",
+  ]);
   const nextMonthHandler = useCallback(() => {
     setCurrentDate(addMonths(currentDate, 1));
   }, [currentDate]);
-
-  const dateClick = (index: number) => {
-    // 클릭한 날짜의 index를 상태에 추가 또는 제거
-    setCheckedDates((prevCheckedDates) => {
-      const isDateChecked = prevCheckedDates.includes(index);
-      if (isDateChecked) {
-        return prevCheckedDates.filter((dateIndex) => dateIndex !== index);
-      } else {
-        return [...prevCheckedDates, index];
-      }
-    });
-  };
 
   const prevMonthHandler = useCallback(() => {
     setCurrentDate(subMonths(currentDate, 1));
@@ -93,7 +109,6 @@ const MakeCalendar = () => {
               color: "blue",
             };
           }
-
           return (
             <div key={`day${i}`} style={style}>
               {v}
@@ -103,44 +118,24 @@ const MakeCalendar = () => {
       </div>
       <div className={styles.dateContainer}>
         {createMonth.map((v, i) => {
-          let style;
-          const validation = getMonth(currentDate) === getMonth(v);
-          const today =
-            format(new Date(), "yyyyMMdd") === format(v, "yyyyMMdd");
-
-          const hasPost = checkedDates.includes(i);
-
-          if (validation && isSaturday(v)) {
-            style = {
-              color: "blue",
-            };
-          } else if (validation && isSunday(v)) {
-            style = {
-              color: "red",
-            };
-          }
+          const content = editor.content && editor.content.filter((v) => v._id);
           return (
-            <div
-              onClick={() => dateClick(i)}
-              key={`date${i}`}
-              className={validation ? styles.currentMonth : styles.diffMonth}
-              style={style}
+            <CalendarDay
+              day={v}
+              today={currentDate}
+              initialContent={initialContent}
               onMouseEnter={() => handleMouseEnter(i)}
               onMouseLeave={handleMouseLeave}
-            >
-              <div className={styles.topLine}>
-                <span className={styles.day}>{format(v, "d")}</span>
-                {today && <span className={styles.today}>(오늘)</span>}
-                {showButton === i && (
-                  <PlusCircle className="w-4 h-4 cursor-pointer" />
-                )}
-              </div>
-            </div>
+              highlighted={showButton === i}
+              addDocument={() => handleCalendarDocument(i)}
+              index={i}
+              editor={editor}
+              content={content}
+            />
           );
         })}
       </div>
     </section>
   );
 };
-
 export default MakeCalendar;

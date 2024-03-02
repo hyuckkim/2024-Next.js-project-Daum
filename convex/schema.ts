@@ -17,11 +17,10 @@ export default defineSchema({
   calendars: defineTable({
     title: v.string(),
     userId: v.string(),
-    newCalendar: v.optional(v.id("calendars")),
     icon: v.optional(v.string()),
     isArchived: v.boolean(),
-    isPublished: v.boolean(),
     content: v.optional(v.string()),
+    isPublished: v.boolean(),
   }).index("by_user", ["userId"]),
 
   boards: defineTable({

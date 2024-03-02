@@ -13,7 +13,7 @@ export const CalendarList = () => {
   const calendars = useQuery(api.calendars.getSidebar, {});
 
   const onRedirect = (calendarId: string) => {
-    router.push(`/calendars`);
+    router.push(`/calendars/${calendarId}`);
   };
 
   if (calendars === undefined) {
@@ -36,7 +36,7 @@ export const CalendarList = () => {
             label={calendar.title}
             icon={CalendarIcon}
             calendarIcon={calendar.icon}
-            active={params.boardId === calendar._id}
+            active={params.calendarId === calendar._id}
           />
         </div>
       ))}

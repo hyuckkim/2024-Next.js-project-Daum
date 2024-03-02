@@ -46,8 +46,6 @@ export const Navigation = () => {
   const createKanban = useMutation(api.boards.create);
   const createCalendar = useMutation(api.calendars.create);
 
-  const calendarCreate = useMutation(api.calendars.create);
-
   const isResizingRef = useRef(false);
   const sidebarRef = useRef<ElementRef<"aside">>(null);
   const navbarRef = useRef<ElementRef<"div">>(null);
@@ -143,7 +141,7 @@ export const Navigation = () => {
 
   const handleCreateCalendar = () => {
     const promise = createCalendar({ title: "Untitled" }).then((calendarId) =>
-      router.push(`/calendars`)
+      router.push(`/calendars/${calendarId}`)
     );
 
     toast.promise(promise, {
