@@ -53,22 +53,8 @@ const RenderChartBlock = ({
 
   return (
     <div>
-      <div className="flex items-center">
+      <div className="flex items-center justify-between mr-[38px]">
         <h1 style={{ fontWeight: "bold" }}>Chart Table</h1>
-        {!preview && (
-          <button
-            onClick={onChartCreated}
-            style={{
-              borderRadius: "10px",
-              backgroundColor: "#FFA979",
-              color: "white",
-              padding: "5px",
-              margin: "5px",
-            }}
-          >
-            차트로 변환
-          </button>
-        )}
       </div>
       <table id="chartTable">
         {tableData.map((row, rowIndex) => (
@@ -91,11 +77,26 @@ const RenderChartBlock = ({
         ))}
       </table>
       {!preview && (
+        <div className="flex justify-between w-[506px]">
         <button
           onClick={addRow} className="border border-[#dddddd] border-t-0 p-1"
         >
           <PlusCircle/>
         </button>
+        <button
+          onClick={onChartCreated}
+          style={{
+            borderRadius: "10px",
+            border: "solid 2px #FFA979",
+            color: "#cc8760",
+            fontWeight: "bold",
+            padding: "5px",
+            margin: "5px",
+          }}
+        >
+          차트로 변환
+        </button>
+        </div>
       )}
     </div>
   );

@@ -3,6 +3,7 @@ import { ElementRef, useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 import { createReactBlockSpec } from "@blocknote/react";
 import { defaultProps } from "@blocknote/core";
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 const PieChartComponent = ({
   id, // 차트마다 id값
@@ -53,6 +54,19 @@ const PieChartComponent = ({
           },
         ],
       },
+      options: {
+        plugins: {
+          datalabels: {
+            labels: {
+              label: {
+                font: {size: 25},
+                color: "grey"
+              },
+            }
+          }
+        }
+      },
+      plugins: [ChartDataLabels],
     });
 
     // 컴포넌트가 언마운트되기 전에 차트 파기
@@ -64,25 +78,27 @@ const PieChartComponent = ({
   return (
     <div>
       <div className="flex items-center">
-        <h1 style={{ fontWeight: "bold" }}>Pie Chart</h1>
-        {!preview && (
-          <button
-          onClick={onTableCreated}
-          style={{
-            borderRadius: "10px",
-            backgroundColor: "#FFA979",
-            color: "white",
-            padding: "5px",
-            margin: "5px",
-          }}
-          >
-            표로 변환
-          </button>
-        )}
       </div>
       <div style={{ width: "450px", height: "450px" }}>
         <canvas id={`${id}_pieChart`} width="100%" height="100%" ref={chartRef}></canvas>
       </div>
+      {!preview && (
+        <div className="flex justify-end w-[506px]">
+        <button
+          onClick={onTableCreated}
+          style={{
+            borderRadius: "10px",
+            border: "solid 2px #FFA979",
+            color: "#cc8760",
+            fontWeight: "bold",
+            padding: "5px",
+            margin: "5px",
+          }}
+        >
+          표로 변환
+        </button>
+      </div>
+      )}
     </div>
   ); // 차트 ID값 사용-> 서로 다른 캔버스 생성 // 차트 ID값 사용-> 서로 다른 캔버스 생성
 };
