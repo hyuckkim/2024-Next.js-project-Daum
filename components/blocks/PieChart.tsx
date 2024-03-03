@@ -4,7 +4,7 @@ import {
   // createReactBlockSpec,
 } from "@blocknote/core";
 import { ReactSlashMenuItem, createReactBlockSpec } from "@blocknote/react";
-import { PieChart } from "lucide-react";
+import { MinusCircle, PieChart, PlusCircle } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import Chart from "chart.js/auto";
 
@@ -119,26 +119,23 @@ const RenderChartBlock = ({
     onChange(name, updatedTableData);
   };
 
-  const deleteButtons = (
-    <>
-      <button
-        onClick={() => deleteRow(tableData.length - 1)}
-        style={{
-          borderRadius: "10px",
-          backgroundColor: "#ff4500",
-          color: "white",
-          padding: "5px",
-          margin: "5px",
-        }}
-      >
-        마지막 행 삭제
-      </button>
-    </>
-  );
-
   return (
     <div>
-      <h1 style={{ fontWeight: "bold" }}>Pie Chart Table</h1>{" "}
+      <div className="flex items-center">
+        <h1 style={{ fontWeight: "bold" }}>Pie Chart Table</h1>
+        <button
+          onClick={handleInputComplete}
+          style={{
+            borderRadius: "10px",
+            backgroundColor: "#FFA979",
+            color: "white",
+            padding: "5px",
+            margin: "5px",
+          }}
+        >
+          차트 생성
+        </button>
+      </div>
       <table id="chartTable">
         {tableData.map((row, rowIndex) => (
           <tr key={rowIndex}>
@@ -152,34 +149,15 @@ const RenderChartBlock = ({
                 />
               </td>
             ))}
+            <td><MinusCircle className="text-red-500" role="button" onClick={() => deleteRow(rowIndex)}/></td>
           </tr>
         ))}
       </table>
       <button
-        onClick={handleInputComplete}
-        style={{
-          borderRadius: "10px",
-          backgroundColor: "#FFA979",
-          color: "white",
-          padding: "5px",
-          margin: "5px",
-        }}
+        onClick={addRow} className="border border-[#dddddd] border-t-0 p-1"
       >
-        차트 생성
+        <PlusCircle/>
       </button>
-      <button
-        onClick={addRow}
-        style={{
-          borderRadius: "10px",
-          backgroundColor: "gray",
-          color: "white",
-          padding: "5px",
-          margin: "5px",
-        }}
-      >
-        행 추가
-      </button>
-      {deleteButtons}
       {chartCreated && (
         <PieChartComponent
           id={id}
