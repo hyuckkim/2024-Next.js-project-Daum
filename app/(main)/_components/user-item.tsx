@@ -12,15 +12,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useState } from "react";
 
 export const UserItem = () => {
   const { user } = useUser();
-  const [count, setCount] = useState(0);
-
-  const onClick = () => {
-    setCount(count + 1);
-  };
 
   return (
     <DropdownMenu>
@@ -49,9 +43,6 @@ export const UserItem = () => {
         <div className="flex flex-col space-y-4 p-2">
           <p className="text-xs font-medium leading-none text-muted-foreground">
             {user?.emailAddresses[0].emailAddress}
-            <div onClick={onClick}>
-              <span>count: {count}</span>
-            </div>
           </p>
           <div className="flex items-center gap-x-2">
             <div className="rounded-md bg-secondary p-1">
