@@ -143,14 +143,13 @@ export const Toolbar = ({ initialData, preview }: ToolbarProps) => {
             Add cover
           </Button>
         )}
-        {!initialData.coverImage && !preview && (
+        {!preview && (
           <Button
             onClick={contentSummary}
             className="text-muted-foreground text-xs"
             variant="outline"
             size="sm"
           >
-            <ImageIcon className="h-4 w-4 mr-2" />
             AI summary
           </Button>
         )}
@@ -172,11 +171,13 @@ export const Toolbar = ({ initialData, preview }: ToolbarProps) => {
           {initialData.title}
         </div>
       )}
+      {!!initialData.summary &&  (
       <div>
         <span>{initialData.summary}</span>
         <br></br>
         <br></br>
       </div>
+      )}
     </div>
   );
 };
