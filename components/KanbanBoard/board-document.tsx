@@ -90,7 +90,7 @@ export const BoardDocument = ({
     if (document.content === undefined) return undefined;
 
     const all = JSON.parse(document.content)
-      .filter((n: {type: string}) => n.type === "checkbox");
+      .filter((n: {type: string}) => n.type === "checkboxListItem");
     if (all.length === 0) return undefined;
     
     const completed = all
