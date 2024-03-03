@@ -66,7 +66,11 @@ const PieChartComponent = ({
     };
   }, [id, tableData, onChartCreated]);
 
-  return <canvas id={`${id}_pieChart`} width="400" height="400"></canvas>; // 차트 ID값 사용-> 서로 다른 캔버스 생성
+  return (
+    <div style={{ width: "450px", height: "450px" }}>
+      <canvas id={`${id}_pieChart`} width="100%" height="100%"></canvas>
+    </div>
+  ); // 차트 ID값 사용-> 서로 다른 캔버스 생성 // 차트 ID값 사용-> 서로 다른 캔버스 생성
 };
 
 const getDefaultTableData = (): string[][] => [
