@@ -18,12 +18,14 @@ const RenderChartBlock = ({
   tableData,
   onChange,
   onChartCreated,
+  preview,
 }: {
   id: string; // 차트마다 id값
   name: string;
   tableData: string[][];
   onChange: (name: string, tableData: string[][]) => void;
   onChartCreated: () => void;
+  preview: boolean;
 }) => {
   const addRow = () => {
     const newRow = ["", ""];
@@ -53,18 +55,20 @@ const RenderChartBlock = ({
     <div>
       <div className="flex items-center">
         <h1 style={{ fontWeight: "bold" }}>Chart Table</h1>
-        <button
-          onClick={onChartCreated}
-          style={{
-            borderRadius: "10px",
-            backgroundColor: "#FFA979",
-            color: "white",
-            padding: "5px",
-            margin: "5px",
-          }}
-        >
-          차트로 변환
-        </button>
+        {!preview && (
+          <button
+            onClick={onChartCreated}
+            style={{
+              borderRadius: "10px",
+              backgroundColor: "#FFA979",
+              color: "white",
+              padding: "5px",
+              margin: "5px",
+            }}
+          >
+            차트로 변환
+          </button>
+        )}
       </div>
       <table id="chartTable">
         {tableData.map((row, rowIndex) => (
@@ -76,18 +80,23 @@ const RenderChartBlock = ({
                   onChange={(e) =>
                     handleDataChange(rowIndex, cellIndex, e.target.value)
                   }
+                  disabled={preview}
                 />
               </td>
             ))}
-            <td><MinusCircle className="text-red-500" role="button" onClick={() => deleteRow(rowIndex)}/></td>
+            {!preview && (
+              <td><MinusCircle className="text-red-500" role="button" onClick={() => deleteRow(rowIndex)}/></td>
+            )}
           </tr>
         ))}
       </table>
-      <button
-        onClick={addRow} className="border border-[#dddddd] border-t-0 p-1"
-      >
-        <PlusCircle/>
-      </button>
+      {!preview && (
+        <button
+          onClick={addRow} className="border border-[#dddddd] border-t-0 p-1"
+        >
+          <PlusCircle/>
+        </button>
+      )}
     </div>
   );
 };
@@ -124,6 +133,7 @@ export const piechartBlock = createReactBlockSpec(
               type: "piechart",
             });
           }}
+          preview={!editor.isEditable}
         />
       );
     },

@@ -8,10 +8,12 @@ const PieChartComponent = ({
   id, // 차트마다 id값
   tableData,
   onTableCreated,
+  preview,
 }: {
   id: string; // 차트마다 id값
   tableData: string[][];
   onTableCreated: () => void,
+  preview: boolean,
 }) => {
   const chartRef = useRef<ElementRef<"canvas">>(null);
 
@@ -63,7 +65,8 @@ const PieChartComponent = ({
     <div>
       <div className="flex items-center">
         <h1 style={{ fontWeight: "bold" }}>Pie Chart</h1>
-        <button
+        {!preview && (
+          <button
           onClick={onTableCreated}
           style={{
             borderRadius: "10px",
@@ -72,9 +75,10 @@ const PieChartComponent = ({
             padding: "5px",
             margin: "5px",
           }}
-        >
-          표로 변환
-        </button>
+          >
+            표로 변환
+          </button>
+        )}
       </div>
       <div style={{ width: "450px", height: "450px" }}>
         <canvas id={`${id}_pieChart`} width="100%" height="100%" ref={chartRef}></canvas>
@@ -108,6 +112,7 @@ export const piechart = createReactBlockSpec(
             type: "chart",
           });
         }}
+        preview={!editor.isEditable}
       />
       );
     },
