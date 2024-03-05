@@ -14,7 +14,7 @@ import { CheckBoxBlockSpec, insertCheckBoxBlock } from "@/components/blocks/chec
 // import { chartBlock, insertChartBlock } from "./blocks/chart";
 import { insertPieChartBlock, piechartBlock } from "./blocks/PieChart";
 import { guestbookBlockSpec, insertGuestBookBlock } from "./blocks/guestbook";
-import { piechart } from "./blocks/PieChratComponent";
+import { piechart } from "./blocks/PieChartComponent";
 
 interface EditorProps {
   onChange: (value: string) => void;
