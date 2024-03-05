@@ -204,7 +204,7 @@ export const BoardElement = ({
         ) : (
           <div
             onClick={() => enableInput()}
-            className="text-xl text-nowrap text-ellipsis overflow-hidden"
+            className="text-xl text-nowrap text-ellipsis overflow-hidden w-full h-7"
           >
             {name}
           </div>
